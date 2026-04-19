@@ -1,0 +1,26 @@
+[
+    {
+        "id": "V1",
+        "name": "Amit Sharma",
+        "skills": ["Health", "First Aid"],
+        "location_coords": [10.5, 20.1],
+        "available": true,
+        "phone": "+91-98765-43210"
+    },
+    {
+        "id": "V2",
+        "name": "Sarah Khan",
+        "skills": ["Relief", "Driving"],
+        "location_coords": [5.2, 5.8],
+        "available": true,
+        "phone": "+91-87654-32109"
+    },
+    {
+        "id": "V3",
+        "name": "John Doe",
+        "skills": ["Education", "General"],
+        "location_coords": [0.0, 0.5],
+        "available": false,
+        "phone": "+91-76543-21098"
+    }
+]

@@ -1,0 +1,371 @@
+{
+    "V1": {
+        "total_points": 1157,
+        "tasks_completed": 26,
+        "badges": [
+            "Top Responder",
+            "Early Bird",
+            "Dedicated",
+            "Veteran",
+            "Medical Hero"
+        ],
+        "energy": 75,
+        "categories": {
+            "Health": 2,
+            "Relief": 4,
+            "Logistics": 2,
+            "Mental Health": 1,
+            "Safety": 2
+        }
+    },
+    "V2": {
+        "total_points": 125,
+        "tasks_completed": 4,
+        "badges": [
+            "Newbie"
+        ],
+        "energy": 100,
+        "categories": {
+            "Health": 1
+        }
+    },
+    "V3": {
+        "total_points": 544,
+        "tasks_completed": 16,
+        "badges": [
+            "Active Contributor",
+            "Dedicated",
+            "Veteran"
+        ],
+        "categories": {
+            "Education": 1,
+            "Health": 2,
+            "Relief": 5,
+            "Logistics": 2,
+            "Safety": 1
+        },
+        "energy": 75
+    },
+    "V4": {
+        "total_points": 878,
+        "tasks_completed": 22,
+        "badges": [
+            "Master Chef",
+            "Hero",
+            "Active Contributor",
+            "Veteran",
+            "Dedicated"
+        ],
+        "categories": {
+            "Safety": 1,
+            "Health": 1,
+            "Relief": 6,
+            "Logistics": 2
+        },
+        "energy": 100
+    },
+    "V5": {
+        "total_points": 25,
+        "tasks_completed": 1,
+        "badges": [],
+        "energy": 100
+    },
+    "V6": {
+        "total_points": 812,
+        "tasks_completed": 19,
+        "badges": [
+            "Veteran",
+            "Strongman",
+            "Dedicated"
+        ],
+        "energy": 75,
+        "categories": {
+            "Logistics": 2,
+            "Relief": 2,
+            "Safety": 1
+        }
+    },
+    "V7": {
+        "total_points": 500,
+        "tasks_completed": 11,
+        "badges": [
+            "Expert Driver",
+            "Dedicated",
+            "Veteran"
+        ],
+        "energy": 100,
+        "categories": {
+            "Logistics": 2
+        }
+    },
+    "V8": {
+        "total_points": 210,
+        "tasks_completed": 6,
+        "badges": [],
+        "energy": 75,
+        "categories": {
+            "Logistics": 2,
+            "Relief": 1,
+            "Safety": 1
+        }
+    },
+    "V9": {
+        "total_points": 968,
+        "tasks_completed": 28,
+        "badges": [
+            "Guardian",
+            "Veteran",
+            "Dedicated"
+        ],
+        "categories": {
+            "Safety": 3
+        },
+        "energy": 75
+    },
+    "V10": {
+        "total_points": 1230,
+        "tasks_completed": 36,
+        "badges": [
+            "Life Saver",
+            "Hero",
+            "Veteran",
+            "Dedicated"
+        ],
+        "categories": {
+            "Safety": 3,
+            "Relief": 2,
+            "Mental Health": 1
+        },
+        "energy": 75
+    },
+    "V11": {
+        "total_points": 308,
+        "tasks_completed": 9,
+        "badges": [],
+        "categories": {
+            "Safety": 2,
+            "Relief": 2,
+            "Logistics": 1
+        },
+        "energy": 75
+    },
+    "V12": {
+        "total_points": 749,
+        "tasks_completed": 16,
+        "badges": [
+            "Healer",
+            "Veteran",
+            "Dedicated"
+        ],
+        "energy": 100,
+        "categories": {
+            "Health": 1,
+            "Relief": 3,
+            "Mental Health": 1
+        }
+    },
+    "V13": {
+        "total_points": 189,
+        "tasks_completed": 6,
+        "badges": [
+            "Listener"
+        ],
+        "energy": 100,
+        "categories": {
+            "Mental Health": 1
+        }
+    },
+    "V14": {
+        "total_points": 30,
+        "tasks_completed": 1,
+        "badges": [],
+        "energy": 100
+    },
+    "V15": {
+        "total_points": 685,
+        "tasks_completed": 15,
+        "badges": [
+            "Nature Lover",
+            "Veteran",
+            "Dedicated"
+        ],
+        "energy": 75,
+        "categories": {
+            "Safety": 2
+        }
+    },
+    "V16": {
+        "total_points": 210,
+        "tasks_completed": 7,
+        "badges": [
+            "Cleaner"
+        ],
+        "energy": 100
+    },
+    "V17": {
+        "total_points": 85,
+        "tasks_completed": 3,
+        "badges": [],
+        "energy": 100,
+        "categories": {
+            "Relief": 1
+        }
+    },
+    "V18": {
+        "total_points": 510,
+        "tasks_completed": 12,
+        "badges": [
+            "Organization Pro",
+            "Veteran"
+        ],
+        "energy": 100
+    },
+    "V19": {
+        "total_points": 140,
+        "tasks_completed": 5,
+        "badges": [],
+        "energy": 100
+    },
+    "V20": {
+        "total_points": 75,
+        "tasks_completed": 3,
+        "badges": [],
+        "energy": 100
+    },
+    "V22": {
+        "total_points": 678,
+        "tasks_completed": 15,
+        "badges": [
+            "Master Teacher",
+            "Veteran",
+            "Dedicated"
+        ],
+        "categories": {
+            "Education": 1
+        },
+        "energy": 100
+    },
+    "V31": {
+        "total_points": 306,
+        "tasks_completed": 7,
+        "badges": [
+            "Tutor"
+        ],
+        "categories": {
+            "Education": 1
+        },
+        "energy": 100
+    },
+    "V35": {
+        "total_points": 386,
+        "tasks_completed": 10,
+        "badges": [
+            "Dedicated"
+        ],
+        "categories": {
+            "Education": 1,
+            "Health": 1,
+            "Relief": 5,
+            "Logistics": 2,
+            "Safety": 1
+        },
+        "energy": 75
+    },
+    "V23": {
+        "total_points": 238,
+        "tasks_completed": 6,
+        "badges": [],
+        "categories": {
+            "Health": 2,
+            "Relief": 3,
+            "Logistics": 1
+        },
+        "energy": 100
+    },
+    "V34": {
+        "total_points": 78,
+        "tasks_completed": 2,
+        "badges": [],
+        "categories": {
+            "Health": 2
+        },
+        "energy": 100
+    },
+    "V30": {
+        "total_points": 280,
+        "tasks_completed": 7,
+        "badges": [],
+        "categories": {
+            "Health": 1,
+            "Relief": 4,
+            "Logistics": 2
+        },
+        "energy": 100
+    },
+    "V27": {
+        "total_points": 200,
+        "tasks_completed": 5,
+        "badges": [],
+        "categories": {
+            "Health": 1,
+            "Relief": 3,
+            "Logistics": 1
+        },
+        "energy": 100
+    },
+    "V24": {
+        "total_points": 240,
+        "tasks_completed": 6,
+        "badges": [],
+        "categories": {
+            "Relief": 6
+        },
+        "energy": 100
+    },
+    "V32": {
+        "total_points": 200,
+        "tasks_completed": 5,
+        "badges": [],
+        "categories": {
+            "Relief": 5
+        },
+        "energy": 100
+    },
+    "V25": {
+        "total_points": 120,
+        "tasks_completed": 3,
+        "badges": [],
+        "categories": {
+            "Logistics": 2,
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V28": {
+        "total_points": 40,
+        "tasks_completed": 1,
+        "badges": [],
+        "categories": {
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V26": {
+        "total_points": 40,
+        "tasks_completed": 1,
+        "badges": [],
+        "categories": {
+            "Safety": 1
+        },
+        "energy": 75
+    },
+    "V33": {
+        "total_points": 40,
+        "tasks_completed": 1,
+        "badges": [],
+        "categories": {
+            "Safety": 1
+        },
+        "energy": 75
+    }
+}

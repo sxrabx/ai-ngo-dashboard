@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+streamlit
+pydantic
+pandas
+crewai
+langchain-openai
+litellm
+chromadb
+sentence-transformers
+python-dotenv
+requests

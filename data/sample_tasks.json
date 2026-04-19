@@ -1,0 +1,20 @@
+[
+    {
+        "task_id": "T_01",
+        "description": "Urgent medicine delivery needed for old age home.",
+        "people_count": 20,
+        "location_coords": [10.0, 20.0]
+    },
+    {
+        "task_id": "T_02",
+        "description": "Transporting food supplies to flood affected area.",
+        "people_count": 50,
+        "location_coords": [5.0, 5.0]
+    },
+    {
+        "task_id": "T_03",
+        "description": "General cleanup and organization.",
+        "people_count": 2,
+        "location_coords": [1.0, 1.0]
+    }
+]

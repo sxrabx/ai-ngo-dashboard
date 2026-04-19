@@ -1,0 +1,39 @@
+========================================
+  EXAMPLE SCENARIOS: AI DECISION MAKING
+========================================
+
+SCENARIO A: THE MEDICAL EMERGENCY
+---------------------------------
+TASK: "Elderly man collapsed, needs doctor now!"
+LOCATION: (5, 5)
+
+Potential Volunteers:
+1. Doc A: Skills [Health], Location (100, 100) - FAR
+2. Doc B: Skills [Health], Location (5.5, 5.5) - CLOSE
+3. Helper C: Skills [General], Location (5.1, 5.1) - VERY CLOSE
+
+AI LOGIC RESULT:
+--> Doc B is ranked #1. 
+--> Why? Because Doc B has the "Health" skill (High Priority) AND is close enough to help. 
+--> Helper C is ignored because they lack medical skills, even though they are closer.
+
+SCENARIO B: FOOD DISTRIBUTION
+-----------------------------
+TASK: "Daily meals delivery needed."
+LOCATION: (0, 0)
+
+Potential Volunteers:
+1. Vol A: Skills [Relief], Location (2, 2), Busy: Yes
+2. Vol B: Skills [Relief], Location (5, 5), Busy: No
+
+AI LOGIC RESULT:
+--> Vol B is ranked #1.
+--> Why? Even though Vol A is closer, they are MARKED AS BUSY. 
+--> The AI prioritizes "Availability" so the task is actually done.
+
+========================================
+  HOW TO SHOW THIS TO JUDGES
+========================================
+1. Open 'tests/test_ai_logic.py'.
+2. Change the 'test_task' data and run it.
+3. Show how the 'priority_score' and 'suggested_volunteers' change instantly.

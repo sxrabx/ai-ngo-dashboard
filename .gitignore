@@ -1,0 +1,30 @@
+# Environments
+.env
+venv/
+venv_linux/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data & DB
+data/vectordb/
+*.sqlite3
+*.db
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# VS Code / IDEs
+.vscode/
+.idea/
+
+# Scratch & Logs
+scratch/
+*.log

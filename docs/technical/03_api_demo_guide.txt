@@ -1,0 +1,30 @@
+========================================
+  AI API GUIDE: HOW TO DEMO
+========================================
+
+1. START THE SERVER
+-------------------
+Open your terminal and run:
+`python src/api.py`
+
+You will see: "Uvicorn running on http://127.0.0.1:5000"
+
+2. OPEN THE VISUAL DASHBOARD
+----------------------------
+Open your browser and go to:
+http://127.0.0.1:5000/docs
+
+This is the "Swagger UI" - it makes your AI look like a professional product.
+
+3. TEST THE ENDPOINT
+--------------------
+- Click on the 'POST /process' bar.
+- Click 'Try it out'.
+- Paste a JSON in the box (use the data in 'data/sample_tasks.json' as a guide).
+- Click 'Execute'.
+
+4. WHY THIS WINS JUDGES:
+-----------------------
+- It shows your system is ready to be integrated.
+- It validates data automatically (if they enter bad data, the API shows an error).
+- It's fast, modern, and high-performance.

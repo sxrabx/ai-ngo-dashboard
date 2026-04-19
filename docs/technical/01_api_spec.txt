@@ -1,0 +1,12 @@
+========================================
+  AI API SPECIFICATION
+========================================
+
+INPUT (JSON):
+- Task (description, count, time)
+- Volunteers (skills, location, availability)
+
+OUTPUT (JSON):
+- category
+- priority_score
+- suggested_volunteers (ranked list)

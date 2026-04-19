@@ -1,0 +1,30 @@
+========================================
+  AI ROLE BRIEF - ROLE & OBJECTIVE
+========================================
+
+Role    : AI / Smart Logic Developer
+
+Objective:
+----------
+Build the "intelligence layer" of the system that helps:
+
+  1. Understand incoming data (needs/tasks)
+  2. Prioritize tasks
+  3. Suggest the best volunteers
+
+NOTE: You are NOT building the full backend.
+      You are building the LOGIC that makes the system smart.
+
+========================================
+  HOW YOUR WORK CONNECTS
+========================================
+
+You will work with backend APIs:
+
+  INPUT:
+    - Tasks data
+    - Volunteer data
+
+  OUTPUT:
+    - Priority score
+    - Suggested volunteers

@@ -1,0 +1,13 @@
+========================================
+  CORE RESPONSIBILITIES
+========================================
+
+1. TASK CLASSIFICATION (Category + Urgency)
+2. PRIORITY SCORING (Importance Score)
+3. SMART MATCHING (Volunteer Ranking)
+4. GAMIFICATION (Next Milestone: Reward & Recognition)
+5. NLP UPGRADE (RAG Architecture)
+6. WORKLOAD BALANCING (Intelligent task distribution)
+7. IMPACT ANALYTICS (Response time & cost-saving metrics)
+8. FORECASTING (Predictive trend analysis)
+9. ADVANCED FINE-TUNING (Custom domain-specific LLMs)
