@@ -1,10 +1,8 @@
 # Entry point for the AI Intelligence Layer
-from src.classifier import classify_task, extract_impact_count, get_llm_reasoning
-
-
-from src.scorer import calculate_score
-from src.matcher import find_matches
-from src.gamifier import calculate_reward_points, load_stats, get_level_info
+from src.nlp.classifier import classify_task, extract_impact_count, get_llm_reasoning
+from src.core.scorer import calculate_score
+from src.core.matcher import find_matches
+from src.core.gamifier import calculate_reward_points, load_stats, get_level_info
 
 
 def assemble_squad(priority_score, ranked_volunteers, category, people_count=1):

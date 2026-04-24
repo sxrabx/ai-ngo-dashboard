@@ -1,16 +1,17 @@
 import os
 import json
 from crewai import Agent, Task, Crew, Process, LLM
+from config.settings import settings
 
-# Use the existing API key we found in classifier.py
-os.environ["OPENAI_API_KEY"] = "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"
-os.environ["OPENAI_API_BASE"] = "https://integrate.api.nvidia.com/v1"
+# Use the API key from our centralized config
+os.environ["OPENAI_API_KEY"] = settings.NVIDIA_API_KEY
+os.environ["OPENAI_API_BASE"] = settings.OPENAI_API_BASE
 
 # Initialize the LLM using the native CrewAI LLM class wrapper for Litellm
 llm = LLM(
     model="openai/meta/llama-3.1-8b-instruct",
-    base_url="https://integrate.api.nvidia.com/v1",
-    api_key=os.environ["OPENAI_API_KEY"],
+    base_url=settings.OPENAI_API_BASE,
+    api_key=settings.NVIDIA_API_KEY,
     temperature=0.1
 )
 

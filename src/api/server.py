@@ -10,7 +10,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Import our AI logic from main.py
-from src.main import process_new_task
+from src.core.engine import process_new_task
 
 app = FastAPI(
     title="AI Intelligence Layer API",

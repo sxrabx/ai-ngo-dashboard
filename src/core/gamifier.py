@@ -5,13 +5,17 @@ DATA_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'volunteer_sta
 
 def load_stats():
     """Loads volunteer stats from JSON file."""
-    if not os.path.exists(DATA_FILE):
+    if not os.path.exists(DATA_FILE) or os.path.getsize(DATA_FILE) == 0:
         return {}
-    with open(DATA_FILE, 'r') as f:
-        return json.load(f)
+    try:
+        with open(DATA_FILE, 'r') as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        return {}
 
 def save_stats(stats):
     """Saves volunteer stats to JSON file."""
+    os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
     with open(DATA_FILE, 'w') as f:
         json.dump(stats, f, indent=4)
 

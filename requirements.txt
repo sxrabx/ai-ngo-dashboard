@@ -2,6 +2,7 @@ fastapi
 uvicorn
 streamlit
 pydantic
+pydantic-settings
 pandas
 crewai
 langchain-openai

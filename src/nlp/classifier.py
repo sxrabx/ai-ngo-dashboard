@@ -1,9 +1,10 @@
 import json
 import requests
 import re
+from config.settings import settings
 
-NVIDIA_API_KEY = "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"
-NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
+NVIDIA_API_KEY = settings.NVIDIA_API_KEY
+NVIDIA_API_URL = settings.NVIDIA_API_URL
 
 # Global cache for the current session to prevent double API calls by Streamlit
 _llm_cache = {}

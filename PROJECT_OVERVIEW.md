@@ -27,7 +27,7 @@ This repository contains the "Intelligence Layer" for a volunteer management sys
 ### AI Models & Intelligence
 | Component | Model Name | Version/Provider | Purpose |
 | :--- | :--- | :--- | :--- |
-| **Reasoning LLM** | `meta/llama-3.1-8b-instruct` | NVIDIA NIM API(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)| Classification, Triage, Logic |
+| **Reasoning LLM** | `meta/llama-3.1-8b-instruct` | NVIDIA NIM API | Classification, Triage, Logic |
 | **Embedding Model** | `all-MiniLM-L6-v2` | Sentence-Transformers | Semantic Vector Generation |
 | **Orchestration** | `CrewAI` | Latest Stable | Multi-agent task extraction |
 
@@ -42,7 +42,7 @@ This repository contains the "Intelligence Layer" for a volunteer management sys
 ### 🔑 Secrets & Configuration
 > [!WARNING]
 > For security, these should normally be stored in a `.env` file. For the hackathon demo purposes, they are listed here for reference:
-*   **NVIDIA API Key**: `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`
+*   **NVIDIA API Key**: `your_nvidia_api_key_here`
 *   **API Base URL**: `https://integrate.api.nvidia.com/v1`
 
 ---
@@ -65,17 +65,23 @@ This repository contains the "Intelligence Layer" for a volunteer management sys
 E:\Hackathon Google\
 
 [ 🟢 ACTIVE / CURRENT CODEBASE ]
-├── src/                      # Source Code (Core Engine)
-│   ├── main.py               # AI Pipeline orchestrator
-│   ├── classifier.py         # Task categorization logic & API connections
-│   ├── scorer.py             # Priority & Severity scoring logic
-│   ├── matcher.py            # Ranking, Distance algorithms, & Vector DB querying
-│   ├── gamifier.py           # Fatigue tracking & Leveling logic
-│   ├── api.py                # FastAPI endpoints
-│   ├── dashboard.py          # Streamlit GUI App & Data visualizations
-│   └── nlp/                  # 🤖 Advanced AI Agent Pipeline
-│       ├── crew.py           # CrewAI Agents (Extraction & Translation)
-│       └── vector_db.py      # ChromaDB Semantic Storage initialization
+├── README.md                 # Master Quickstart & Architecture Overview
+├── PROJECT_OVERVIEW.md       # Advanced Technical Deep-Dive
+├── workflow_diagram.md       # Mermaid Automated Data Flow Visualizations
+├── setup_fedora.sh           # Automated Linux/Fedora Environment Builder
+├── src/                      # Source Code (Tiered Architecture)
+│   ├── core/                 # Core Business Logic
+│   │   ├── engine.py         # AI Pipeline orchestrator & Logic math
+│   │   ├── scorer.py         # Priority & Severity scoring logic
+│   │   ├── matcher.py        # Ranking & Distance algorithms
+│   │   └── gamifier.py       # Fatigue tracking & Leveling logic
+│   ├── nlp/                  # 🤖 Advanced AI Models
+│   │   ├── crew.py           # CrewAI Agents (Extraction & Translation)
+│   │   ├── classifier.py     # Llama-3.1 API interactions
+│   │   └── vector_db.py      # ChromaDB Semantic Storage & Transformers
+│   └── api/                  # Interfaces & Endpoints
+│       ├── server.py         # FastAPI REST Endpoints
+│       └── dashboard.py      # Streamlit GUI & Plotly Visualizations
 ├── data/                     # Data Persistence & DB
 │   ├── vectordb/             # Automatically generated ChromaDB SQLite databases
 │   ├── sample_tasks.json     # Mock database for tasks
@@ -103,16 +109,16 @@ pip install fastapi uvicorn streamlit pydantic pandas crewai langchain-openai li
 
 ### 2. Launch the AI Dashboard (For Live Demo)
 ```powershell
-streamlit run src/dashboard.py
+streamlit run src/api/dashboard.py
 ```
 *Accessible at: http://127.0.0.1:8501*  
 **Test Workflow:** Use the sidebar to upload `test_report_extreme.txt` and click the `🪄 AI Auto-Extract` button to watch the multi-agent pipeline at work.
 
 ### 3. Launch the AI API (For Backend Integration)
 ```powershell
-python src/api.py
+uvicorn src.api.server:app --reload
 ```
-*API Documentation: http://127.0.0.1:5000/docs*
+*API Documentation: http://127.0.0.1:8000/docs*
 
 ---
 
@@ -122,7 +128,7 @@ python src/api.py
 - [x] **Autonomous NGO Report Extraction**: Multi-agent CrewAI pipeline auto-generating actionable JSON tasks directly from uploaded chaotic incident reports.
 - [x] **NLP Upgrade (Semantic Matching)**: Upgraded from keyword matching to ChromaDB vector embeddings to seamlessly match complex task descriptions with volunteer profiles dynamically.
 - [x] **Multi-lingual Translation**: CrewAI Agents automatically translating live incident reports into Spanish and French.
-- [x] **Enterprise Impact Analytics**: Fully integrated dashboard tracking overarching ROI, manual hours saved, matching accuracy, and live volunteer fatigue metrics.
+- [x] **Enterprise Impact Analytics**: Upgraded with interactive **Plotly** data visualizations (Dynamic Resource Strain Gauges, Pie Charts, and Area Graphs).
 - [x] **Smart Triage (Proximity-First)**: Real-time calculation using coordinate distance parsing to find Fast Responders.
 - [x] **Mega-Squad Logic**: Handlers for high-impact disasters with dual-leadership teams (Team Alpha/Beta).
 - [x] **Workload Balancing**: Prevent volunteer burnout via the dynamic Gamification/Fatigue Tracking System.

@@ -2,12 +2,15 @@ import streamlit as st
 import pandas as pd
 import sys
 import os
+import plotly.graph_objects as go
+import plotly.express as px
 
-# Set standard paths
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from src.main import process_new_task
-from src.gamifier import update_volunteer_after_task
-from src.classifier import extract_impact_count
+# Add project root (two levels up from src/api/) so 'src.*' imports resolve correctly
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from src.core.engine import process_new_task
+from src.core.gamifier import update_volunteer_after_task
+from src.nlp.classifier import extract_impact_count
 
 
 # --- PAGE CONFIG ---
@@ -16,48 +19,63 @@ st.set_page_config(page_title="NGO AI Command Center", page_icon="🛡️", layo
 # --- PREMIUM CSS REVAMP ---
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap');
     
-    * { font-family: 'Outfit', sans-serif; }
+    * { font-family: 'Inter', sans-serif; }
     
-    /* Force Dark Mode Override */
-    [data-testid="stAppViewContainer"] { background: radial-gradient(circle at top right, #1a1c2c, #0d0e17) !important; color: white !important; }
-    [data-testid="stSidebar"] { background-color: #12141d !important; }
+    /* Solid Dark Background */
+    [data-testid="stAppViewContainer"] { background: #111111 !important; color: #e0e0e0 !important; }
+    [data-testid="stSidebar"] { background-color: #171717 !important; border-right: 1px solid #2a2a2a !important; }
     [data-testid="stHeader"] { background-color: transparent !important; }
-    h1, h2, h3, p, label, .stMetric, span { color: white !important; }
-    /* Expander Fixes */
-    [data-testid="stExpander"] { background-color: rgba(25, 28, 44, 0.8) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 12px !important; overflow: hidden; }
-    [data-testid="stExpander"] details summary { background-color: transparent !important; color: white !important; }
-    [data-testid="stExpander"] details summary p { color: white !important; font-weight: bold; }
-    [data-testid="stExpander"] details summary:hover { background-color: rgba(255,255,255,0.1) !important; }
-    /* Glassmorphism Containers */
-    .glass-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        padding: 20px;
-        margin-bottom: 20px;
+    p, label, .stMetric, span { color: #e0e0e0 !important; }
+    
+    /* Elegant Serif Headers with Golden Hue */
+    h1, h2, h3 { 
+        font-family: 'Playfair Display', serif !important; 
+        color: #e3c06e !important; 
+        letter-spacing: 0.5px; 
+        font-weight: 700 !important;
     }
     
-    .stTextArea textarea { background-color: #1a1c2c !important; color: white !important; border: 1px solid rgba(0, 212, 255, 0.4) !important; border-radius: 10px !important; }
+    /* Expander Fixes */
+    [data-testid="stExpander"] { background-color: #1a1a1a !important; border: 1px solid #2a2a2a !important; border-radius: 8px !important; overflow: hidden; }
+    [data-testid="stExpander"] details summary { background-color: transparent !important; color: #e3c06e !important; font-family: 'Playfair Display', serif; }
+    [data-testid="stExpander"] details summary p { color: #e3c06e !important; font-weight: bold; font-family: 'Playfair Display', serif; }
+    [data-testid="stExpander"] details summary:hover { background-color: #222222 !important; }
+    
+    /* Clean Subtitle / Italic text styling */
+    .subtitle { font-family: 'Inter', sans-serif; font-style: italic; color: #a0a0a0; font-size: 0.9em; }
+    
+    /* Input Areas */
+    .stTextArea textarea { background-color: #1a1a1a !important; color: #e0e0e0 !important; border: 1px solid #333 !important; border-radius: 6px !important; }
+    .stTextArea textarea:focus { border-color: #e3c06e !important; box-shadow: 0 0 0 1px #e3c06e !important; }
+    
+    /* Elegant Buttons */
     .stButton>button { 
-        background: linear-gradient(90deg, #007bff, #00d4ff) !important; 
-        border: none !important; color: white !important; font-weight: 700; border-radius: 10px; height: 3.5em; transition: 0.3s;
+        background: #1a1a1a !important; 
+        border: 1px solid #e3c06e !important; 
+        color: #e3c06e !important; 
+        font-weight: 600; 
+        border-radius: 6px; 
+        height: 3em; 
+        transition: 0.2s;
+        font-family: 'Inter', sans-serif;
     }
-    .stButton>button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,123,255,0.3); }
+    .stButton>button:hover { background: #e3c06e !important; color: #111111 !important; transform: translateY(-1px); }
     
     /* Reasoning Box Styling */
     .reasoning-box {
-        background: rgba(0, 212, 255, 0.05);
-        border-left: 5px solid #00d4ff;
+        background: #161616;
+        border-left: 4px solid #81B29A;
         padding: 15px;
-        border-radius: 5px;
+        border-radius: 4px;
         margin: 20px 0;
+        border-top: 1px solid #222;
+        border-right: 1px solid #222;
+        border-bottom: 1px solid #222;
     }
     
-    h1, h2, h3 { color: #f0f2f6 !important; letter-spacing: -0.5px; }
-    .energy-bar-container { background: rgba(255,255,255,0.1); height: 6px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+    .energy-bar-container { background: #222; height: 6px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -102,7 +120,7 @@ if 'volunteers' not in st.session_state:
     ]
 
 # ENFORCE ENERGY & LEVEL SYNC ON EVERY RENDER
-from src.gamifier import load_stats, get_level_info
+from src.core.gamifier import load_stats, get_level_info
 current_stats = load_stats()
 for v in st.session_state.volunteers:
     if v['id'] in current_stats:
@@ -185,7 +203,7 @@ with st.sidebar:
     st.write("---")
     with st.expander("🛠️ Admin Tools"):
         if st.button("🔋 Reset Energy Statistics"):
-            from src.gamifier import load_stats, save_stats
+            from src.core.gamifier import load_stats, save_stats
             stats = load_stats()
             for v_id in stats: stats[v_id]['energy'] = 100
             save_stats(stats)
@@ -326,21 +344,66 @@ with st.expander("📈 Enterprise Impact Analytics & ROI", expanded=False):
     col4.metric("Avg Response Time", "14 mins", "-3.5 mins (Faster)")
     
     st.write(" ")
-    c_chart1, c_chart2 = st.columns(2)
-    with c_chart1:
-        st.markdown("**Tasks by Category (YTD)**")
-        chart_data = pd.DataFrame(
-            {"Category": ["Health", "Relief", "Logistics", "Safety", "Mental Health"], 
-             "Quantity": [120, 85, 45, 90, 30]}
-        )
-        st.bar_chart(chart_data.set_index("Category"))
+    c_chart1, c_chart2, c_chart3 = st.columns(3)
     
+    with c_chart1:
+        st.markdown("**System Resource Strain**")
+        
+        # Calculate dynamic system load based on depleted volunteer energy
+        total_energy = sum(v.get('energy', 100) for v in st.session_state.volunteers)
+        max_energy = len(st.session_state.volunteers) * 100
+        avg_energy = (total_energy / max_energy) * 100 if max_energy > 0 else 100
+        system_load = round(100 - avg_energy, 1)
+        
+        # Dynamic color based on severity
+        if system_load < 33:
+            gauge_color = "#5A9D6A" # Green
+        elif system_load < 66:
+            gauge_color = "#e3c06e" # Yellow/Gold
+        else:
+            gauge_color = "#ff4b4b" # Red
+            
+        # Gauge Chart matching the provided photo style
+        fig_gauge = go.Figure(go.Indicator(
+            mode = "gauge+number",
+            value = system_load,
+            number = {'suffix': "%", 'font': {'color': gauge_color, 'family': 'Inter', 'size': 40}},
+            domain = {'x': [0, 1], 'y': [0, 1]},
+            gauge = {
+                'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': "white", 'tickfont': {'color': 'white'}},
+                'bar': {'color': gauge_color, 'thickness': 0.3},
+                'bgcolor': "rgba(0,0,0,0)",
+                'borderwidth': 0,
+                'steps': [
+                    {'range': [0, 33], 'color': "rgba(90, 157, 106, 0.15)"},
+                    {'range': [33, 66], 'color': "rgba(227, 192, 110, 0.15)"},
+                    {'range': [66, 100], 'color': "rgba(255, 75, 75, 0.15)"}],
+            }))
+        fig_gauge.update_layout(height=220, margin=dict(l=20, r=20, t=30, b=20), paper_bgcolor="rgba(0,0,0,0)", font={'color': "white", 'family': "Inter"})
+        st.plotly_chart(fig_gauge, use_container_width=True)
+
     with c_chart2:
-        st.markdown("**Volunteer Active Roster (Simulated)**")
-        # Extract energy stats dynamically
+        st.markdown("**Tasks by Category (YTD)**")
+        # Pie Chart
+        pie_data = pd.DataFrame({
+            "Category": ["Health", "Relief", "Logistics", "Safety", "Mental Health"], 
+            "Quantity": [120, 85, 45, 90, 30]
+        })
+        fig_pie = px.pie(pie_data, values='Quantity', names='Category', hole=0.4, 
+                         color_discrete_sequence=['#e3c06e', '#81B29A', '#3D5A80', '#E07A5F', '#F4F1DE'])
+        fig_pie.update_layout(height=220, margin=dict(l=10, r=10, t=10, b=10), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font={'color': "white", 'family': "Inter"})
+        st.plotly_chart(fig_pie, use_container_width=True)
+    
+    with c_chart3:
+        st.markdown("**Energy Tracker (Top Units)**")
+        # Area graph for dynamic energy levels
         energy_levels = [v.get('energy', 100) for v in st.session_state.volunteers[:10]]
-        df_energy = pd.DataFrame(energy_levels, columns=["Energy Tracker (Top 10 Drones)"])
-        st.line_chart(df_energy)
+        df_energy = pd.DataFrame({"Unit": [f"V{i+1}" for i in range(len(energy_levels))], "Energy": energy_levels})
+        fig_line = px.area(df_energy, x="Unit", y="Energy", color_discrete_sequence=['#e3c06e'])
+        fig_line.update_layout(height=220, margin=dict(l=10, r=10, t=10, b=10), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font={'color': "white", 'family': "Inter"})
+        fig_line.update_xaxes(showgrid=False, title="")
+        fig_line.update_yaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', title="")
+        st.plotly_chart(fig_line, use_container_width=True)
         
     st.caption("Powered by CrewAI Autonomous Agents & Proximity Engine.")
     
