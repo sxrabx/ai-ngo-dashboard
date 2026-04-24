@@ -5,6 +5,7 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)
 ![CrewAI](https://img.shields.io/badge/CrewAI-Agents-FF9900?style=for-the-badge)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector_DB-4285F4?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)
 
 A powerful, enterprise-grade AI triage and volunteer coordination platform. Built for hackathons and NGOs to dynamically extract actionable disaster relief tasks from unstructured reports, semantically match the best volunteer profiles, and coordinate massive "Mega-Squads" in real-time.
 
@@ -283,3 +284,7 @@ stateDiagram-v2
     Energy_Depleted --> Level_Up: +20 XP Gained
     Level_Up --> Badges: 500 XP -> Veteran Badge
 ```
+
+## ⚖️ License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
