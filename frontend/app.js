@@ -19,9 +19,9 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
     try {
         // Prepare mock volunteers to send to the FastAPI engine
         const mockVolunteers = [
-            { id: "V1", name: "Dr. Sarah Chen", skills: ["Medical", "Trauma"], energy: 95 },
-            { id: "V2", name: "Mike Johnson", skills: ["Rescue", "Logistics"], energy: 100 },
-            { id: "V3", name: "Emma Davis", skills: ["Medical", "Pediatrics"], energy: 85 }
+            { id: "V1", name: "Dr. Sarah Chen", skills: ["Medical", "Trauma"], location_coords: [34.0, -118.0], available: true, energy: 95 },
+            { id: "V2", name: "Mike Johnson", skills: ["Rescue", "Logistics"], location_coords: [34.1, -118.1], available: true, energy: 100 },
+            { id: "V3", name: "Emma Davis", skills: ["Medical", "Pediatrics"], location_coords: [34.2, -118.2], available: true, energy: 85 }
         ];
 
         // Call the FastAPI backend running on port 8000
