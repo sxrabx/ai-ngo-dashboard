@@ -16,7 +16,7 @@ app = FastAPI(
     title="AI Intelligence Layer API",
     description="Hackathon AI system for task classification, scoring, and volunteer matching.",
     version="1.0.0",
-    servers=[{"url": "http://127.0.0.1:5000", "description": "Local Development Server"}]
+    servers=[{"url": "http://127.0.0.1:8000", "description": "Local Development Server"}]
 )
 
 # --- CORS SETUP ---
@@ -73,5 +73,5 @@ def process_ai_request(data: MatchRequest):
     return result
 
 if __name__ == "__main__":
-    print("Starting AI Layer Server on http://127.0.0.1:5000")
-    uvicorn.run(app, host="127.0.0.1", port=5000)
+    print("Starting AI Layer Server on http://127.0.0.1:8000")
+    uvicorn.run(app, host="127.0.0.1", port=8000)

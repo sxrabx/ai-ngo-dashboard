@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO AI Command Center</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h2>AI Command</h2>
+            </div>
+            <nav>
+                <a href="#" class="active"><i class="fa-solid fa-satellite-dish"></i> <span>Mission Control</span></a>
+                <a href="#"><i class="fa-solid fa-users"></i> <span>Volunteer Roster</span></a>
+                <a href="#"><i class="fa-solid fa-chart-pie"></i> <span>Analytics</span></a>
+                <a href="#"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+            </nav>
+            <div class="system-status">
+                <p>System Status</p>
+                <div class="status-indicator">
+                    <span class="pulse"></span> Online (FastAPI)
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <div class="header-titles">
+                    <h1>Command Center</h1>
+                    <p>Extract, triage, and deploy "Mega-Squads" using CrewAI & ChromaDB.</p>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">Commander</div>
+                </div>
+            </header>
+
+            <section class="dashboard-grid">
+                <!-- Input Panel -->
+                <div class="glass-card input-panel">
+                    <h3><i class="fa-solid fa-pen-nib"></i> Field Report Input</h3>
+                    <textarea id="reportInput" placeholder="Paste chaotic field report here... e.g. 'Massive flooding in sector 4, we need 5 medics...'"></textarea>
+                    <button id="analyzeBtn" class="btn-primary">
+                        <span>Analyze & Deploy</span>
+                        <i class="fa-solid fa-rocket"></i>
+                    </button>
+                    <div id="loader" class="loader hidden">
+                        <div class="spinner"></div>
+                        <p>CrewAI Agents Extracting...</p>
+                    </div>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="glass-card results-panel">
+                    <h3><i class="fa-solid fa-microchip"></i> AI Intelligence Output</h3>
+                    
+                    <div id="emptyState" class="empty-state">
+                        <i class="fa-solid fa-radar"></i>
+                        <p>Awaiting incoming transmission...</p>
+                    </div>
+
+                    <div id="resultsData" class="results-data hidden">
+                        <div class="metrics-row">
+                            <div class="metric-box">
+                                <span class="label">Priority Score</span>
+                                <strong id="priorityScore" class="value text-gold">0</strong>
+                            </div>
+                            <div class="metric-box">
+                                <span class="label">Task Category</span>
+                                <strong id="taskCategory" class="value">N/A</strong>
+                            </div>
+                        </div>
+
+                        <div class="translation-box">
+                            <h4><i class="fa-solid fa-language"></i> French Translation</h4>
+                            <p id="frTranslation">...</p>
+                        </div>
+
+                        <div class="squad-box">
+                            <h4><i class="fa-solid fa-helicopter"></i> Assembled Squad</h4>
+                            <ul id="squadList" class="squad-list">
+                                <!-- Populated via JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
