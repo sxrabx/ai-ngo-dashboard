@@ -1,21 +1,24 @@
 <h1 align="center">
   <br>
-  🛡️ NGO AI Command Center & Smart Volunteer Triage
+  🛰️ NGO AI Mission Intelligence System
   <br>
 </h1>
 
 <p align="center">
-  <strong>A full-stack, enterprise-grade platform combining an intelligent multi-agent AI triage engine with a modern incident management dashboard.</strong>
+  <strong>A full-stack AI command platform for real-time disaster response — intelligent mission generation, semantic volunteer triage, interactive maps, and live inventory management.</strong>
 </p>
 
 <p align="center">
+  <a href="https://github.com/sxrabx/ai-ngo-dashboard/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License" />
+  </a>
   <img src="https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/FastAPI-0.104-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Streamlit-1.28+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" />
+  <img src="https://img.shields.io/badge/FastAPI-REST_API-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" />
   <img src="https://img.shields.io/badge/CrewAI-Agents-FF9900?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/ChromaDB-1.5-orange?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/ChromaDB-Vector_DB-orange?style=for-the-badge" />
   <img src="https://img.shields.io/badge/NVIDIA-NIM_API-76B900?style=for-the-badge&logo=nvidia&logoColor=white" />
-  <img src="https://img.shields.io/badge/Plotly-Analytics-3F4F75?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Node.js-Launcher-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
 </p>
 
 ---
@@ -24,291 +27,387 @@
 
 - [Overview](#-overview)
 - [Architecture](#-architecture)
-- [Repository Structure](#-repository-structure)
-- [Feature Breakdown](#-feature-breakdown)
-  - [Incident Command Dashboard](#1-incident-command-dashboard)
-  - [AI Intelligence Engine](#2-ai-intelligence-engine)
+- [Features](#-features)
 - [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Environment Setup](#environment-setup)
-- [Environment Variables](#-environment-variables)
+- [Project Structure](#-project-structure)
+- [Prerequisites](#-prerequisites)
+- [Installation & Setup](#-installation--setup)
+- [Configuration](#-configuration)
+- [Running the Application](#-running-the-application)
 - [API Reference](#-api-reference)
-- [Project Roadmap](#-project-roadmap)
+- [Usage Notes](#-usage-notes)
+- [Roadmap](#-roadmap)
 - [Contributing](#-contributing)
 - [License](#-license)
+- [Credits](#-credits)
 
 ---
 
 ## 🌟 Overview
 
-**NGO AI Command Center** is a comprehensive coordination platform designed to modernize disaster response and volunteer triage through autonomous AI agents. It addresses two critical pain points in modern crisis management:
+**NGO AI Mission Intelligence System** is a production-grade coordination platform that modernises disaster response operations for non-governmental organisations. It combines a real-time Streamlit command dashboard with an autonomous AI backend to solve two fundamental challenges in crisis management:
 
-1. **Chaotic Field Reports**: Multi-agent CrewAI pipelines parse completely unstructured, messy incident reports into actionable JSON tasks, translating them and identifying severities instantly.
-2. **Inefficient Volunteer Deployment**: A local ChromaDB semantic vector search replaces rigid keyword-matching to find the absolute best volunteers for the job. Proximity-first logic and energy fatigue tracking ensure sustainable, rapid deployments.
+1. **Unstructured Field Reports → Actionable Missions** — Multi-agent CrewAI pipelines powered by NVIDIA NIM (Llama 3.1) parse chaotic, free-text incident reports and PDF documents into structured mission objects with severity ratings, volunteer requirements, and multi-lingual translations.
 
-Together, these systems form a unified, enterprise-grade response platform capable of scaling up to "Mega-Squads" for mass casualty events.
+2. **Inefficient Volunteer Deployment → Intelligent Triage** — A local ChromaDB vector store with Sentence-Transformer embeddings replaces naive keyword matching. Volunteers are scored by semantic skill alignment, proximity, and live energy level — preventing burnout while maximising response speed.
+
+An offline AI fallback mode ensures the platform stays operational even when the NVIDIA NIM API is unavailable.
 
 ---
 
 ## 🏗️ Architecture
 
 ```text
-┌─────────────────────────────────────────────────────────────────────┐
-│                      NGO COMMAND PLATFORM                           │
-│                                                                     │
-│  ┌──────────────────────────┐    ┌──────────────────────────────┐   │
-│  │    Streamlit Dashboard   │    │     AI Intelligence Engine   │   │
-│  │     (Python + Plotly)    │    │ (FastAPI + CrewAI + ChromaDB)│   │
-│  • Report Upload UI      │    │  • Multi-Agent Extraction    │   │
-│  │  • Volunteer Roster      │    │  • Semantic Vector Search    │   │
-│  │  • Squad Deployment      │◄───┤  • Proximity Scoring         │   │
-│  │  • Real-time Analytics   │    │  • Mega-Squad Assembly       │   │
-│  │  • System Strain Gauge   │    │  • Energy/Fatigue Tracking   │   │
-│  │                          │    │                              │   │
-│  └──────────────────────────┘    └──────────────────────────────┘   │
-│                │                                │                   │
-│                ▼                                ▼                   │
-│         Plotly Analytics              NVIDIA NIM API (Llama 3.1)    │
-│         JSON Gamifier DB              Sentence-Transformers         │
-└─────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────┐
+│                    NGO AI COMMAND PLATFORM                         │
+│                                                                    │
+│  ┌─────────────────────────┐    ┌────────────────────────────┐     │
+│  │   Streamlit Dashboard   │    │    FastAPI AI Backend      │     │
+│  │      (app.py)           │    │  (src/api/server.py)       │     │
+│  │                         │    │                            │     │
+│  │  • Mission Lab          │    │  • /process endpoint       │     │
+│  │  • Volunteer Roster     │◄───►  • CrewAI Agent Pipeline   │     │
+│  │  • Map Intelligence     │    │  • ChromaDB Vector Search  │     │
+│  │  • Inventory & Logistics│    │  • Squad Assembly Logic    │     │
+│  │  • System Health / Logs │    │  • Gamification Engine     │     │
+│  └─────────────────────────┘    └────────────────────────────┘     │
+│               │                               │                    │
+│               ▼                               ▼                    │
+│     Folium Interactive Map        NVIDIA NIM (Llama 3.1-8b)        │
+│     Plotly Gauges & Charts        Sentence-Transformers Embeddings  │
+│     JSON Persistence Layer        Offline Heuristic Fallback        │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📊 Live Enterprise Analytics
+## ✨ Features
 
-The system automatically generates dynamic ROI and performance metrics. The following are interactive visualizations rendered natively by GitHub mapping to the live Plotly dashboard equivalents:
-
-```mermaid
-xychart-beta
-    title "System Efficiency: Manual Hours Saved per Month"
-    x-axis [Jan, Feb, Mar, Apr, May, Jun]
-    y-axis "Hours" 0 --> 400
-    bar [120, 150, 180, 220, 310, 380]
-    line [120, 150, 180, 220, 310, 380]
-```
-
-```mermaid
-pie title Tasks Processed by Category (YTD)
-    "Health & Medical" : 120
-    "Safety & Rescue" : 90
-    "Relief & Supplies" : 85
-    "Logistics" : 45
-    "Mental Health" : 30
-```
-
----
-
-## 📁 Repository Structure
-
-```text
-Hackathon Google/
-│
-├── 📄 README.md                        ← You are here
-├── 📄 .gitignore                       ← Unified ignore rules
-├── 📄 setup_fedora.sh                  ← Automated Linux setup script
-├── 📄 requirements.txt                 ← Python dependencies
-│
-├── 📂 src/                             ← Core Application
-│   ├── 📂 api/                         ← Interfaces
-│   │   ├── server.py                   ← FastAPI REST API
-│   │   └── dashboard.py                ← Streamlit GUI & Analytics
-│   ├── 📂 core/                        ← Business Logic
-│   │   ├── engine.py                   ← Pipeline orchestrator
-│   │   ├── scorer.py                   ← Severity scoring
-│   │   ├── matcher.py                  ← Distance algorithms
-│   │   └── gamifier.py                 ← Fatigue & leveling logic
-│   └── 📂 nlp/                         ← Advanced AI Models
-│       ├── crew.py                     ← CrewAI Agents
-│       ├── classifier.py               ← Llama-3.1 interactions
-│       └── vector_db.py                ← ChromaDB Storage
-│
-└── 📂 data/                            ← Persistence
-    ├── 📂 vectordb/                    ← ChromaDB SQLite databases
-    ├── sample_tasks.json               ← Mock database
-    └── volunteer_stats.json            ← Fatigue Persistence
-```
-
----
-
-## 🔥 Feature Breakdown
-
-### 1. Incident Command Dashboard
-
-A dynamic, production-grade interface built with **Streamlit** and styled with a custom dark/gold aesthetic and **Plotly** interactive graphs.
+### 🖥️ Command Dashboard (`app.py`)
 
 | Module | Description |
-|---|---|
-| **Mission Control** | Paste chaotic field reports for immediate, one-click AI extraction. |
-| **Tactical View** | Live roster of volunteers with their current energy levels and match scores. |
-| **Enterprise Analytics** | Interactive Plotly gauge tracking "System Resource Strain", pie charts for task categories, and area graphs for top-unit energy. |
-| **Gamified Triage** | Live energy tracking that depletes when volunteers are deployed to prevent burnout. |
-| **Auto-Translation** | Instant translations of incident reports into Spanish and French. |
+|--------|-------------|
+| **Dashboard** | Live metrics — active missions, ready personnel, overall readiness %. Includes a Folium interactive map and Plotly readiness gauge. Triggers a CODE RED alert when readiness drops below 30%. |
+| **Mission Lab** | Submit free-text crisis reports or upload PDF damage assessments. AI generates a structured mission plan (category, priority, volunteers needed) automatically. |
+| **Volunteer Roster** | Live roster showing energy levels (colour-coded), XP, rank, and availability. One-click global energy recovery cycle. |
+| **Map Intelligence** | Full-screen Folium map displaying all active missions (red pulse markers) and available volunteers (blue markers) by sector. |
+| **Inventory & Logistics** | Browse the NGO's asset catalogue — medical kits, rescue gear, survival supplies, satellite uplinks, drone fleet, and mission-ready kit configurations. |
+| **System Health** | Real-time uptime, API gateway status, active AI mode (Cloud vs. Offline), and live telemetry feed. |
+| **Logs** | Full operational log viewer showing all system events in reverse chronological order. |
 
----
+### 🤖 AI Intelligence Engine
 
-### 2. AI Intelligence Engine
-
-A powerful pipeline orchestrated by **CrewAI** and **FastAPI**, running on **Llama-3.1-8b** via NVIDIA NIM.
-
-#### How it works
-
-```text
-Chaotic Field Report (Text)
-         │
-         ▼
- CrewAI Extraction Agents (Llama 3.1)
-         │
-         ▼
- Clean JSON (Severity, Category, Translation)
-         │
-         ▼
- Sentence-Transformers Embedding
-         │
-         ▼
- ChromaDB Semantic Similarity Search
-         │
-         ▼
- Proximity + Energy Math (Score Penalties)
-         │
-         ▼
- Squad Assembly (Mega-Squad Split if >40 victims)
-```
-
-#### Squad Assembly Logic
-
-| Type | Condition | Logic Executed |
-|---|---|---|
-| **Standard Squad** | < 40 Victims | Deploys a precision team prioritizing the closest, most energized volunteers via Semantic search. |
-| **Mega-Squad** | > 40 Victims | System dynamically splits the response into **Team Alpha** and **Team Beta**, pulling in veteran leadership. |
+| Capability | Description |
+|------------|-------------|
+| **AI Mission Generation** | Calls NVIDIA NIM (Llama 3.1-8b-instruct) via the CrewAI pipeline to classify incident category, urgency, and victim count from raw text. |
+| **Offline Fallback Mode** | If the NVIDIA NIM API is unavailable, the system automatically switches to `offline_engine.py` — a local heuristics-based classifier — ensuring zero-downtime operation. |
+| **Semantic Volunteer Matching** | ChromaDB + `all-MiniLM-L6-v2` (384-dim) embeddings match task requirements to volunteer skill vectors — no keyword matching, purely semantic. |
+| **Multi-Tier Squad Assembly** | Squads are dynamically scaled by `people_count` and `priority`: Standard Squad (< 10 victims), Strike Force (10–40), Regiment / Mega-Squad (> 40), with Team Alpha/Beta/Gamma splits. |
+| **PDF Report Extraction** | Upload NGO damage assessment PDFs; PyPDF2 extracts text and feeds it directly into the mission generation pipeline. |
+| **Gamified Fatigue Tracking** | Volunteer energy depletes on deployment (0–100%). XP and level-up rewards are calculated by `gamifier.py` to sustain morale and prevent burnout. |
+| **Multi-lingual Translation** | CrewAI translation agents render incident reports in Spanish and French for international responders (secondary dashboard). |
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend (Dashboard)
+### Python Backend & AI
 | Technology | Purpose |
-|---|---|
-| Streamlit | Core UI framework |
-| Plotly | Interactive gauges and charts |
-| Pandas | Data frame manipulation |
+|------------|---------|
+| **Python 3.12+** | Core language |
+| **FastAPI** | High-performance REST API server |
+| **Uvicorn** | ASGI server for FastAPI |
+| **Streamlit** | Interactive command dashboard UI |
+| **CrewAI** | Multi-agent autonomous orchestration |
+| **LangChain OpenAI** | LLM integration adapter |
+| **LiteLLM** | Unified LLM gateway |
+| **NVIDIA NIM API** | Cloud LLM inference — `meta/llama-3.1-8b-instruct` |
+| **ChromaDB** | Local persistent vector database |
+| **Sentence-Transformers** | `all-MiniLM-L6-v2` — 384-dim semantic embeddings |
+| **Pandas** | Data manipulation |
+| **Plotly** | Interactive gauges and charts |
+| **Folium + streamlit-folium** | Interactive deployment maps |
+| **PyPDF2** | PDF text extraction |
+| **python-dotenv / pydantic-settings** | Environment variable management |
 
-### Backend (AI Engine)
+### Launcher & Frontend
 | Technology | Purpose |
-|---|---|
-| FastAPI | High-performance REST API |
-| CrewAI | Multi-agent autonomous orchestration |
-| ChromaDB | Vector similarity search |
-| Sentence-Transformers | 384-dim text embeddings |
-| NVIDIA NIM API | Cloud LLM Inference (Llama 3.1 8b) |
+|------------|---------|
+| **Node.js** | Developer launcher script (`launch.js`) |
+| **chalk, ora, boxen, cli-table3, open** | Launcher CLI UI libraries |
+| **HTML / CSS / JavaScript** | Static frontend (`frontend/`) served on port 3000 |
 
 ---
 
-## 🚀 Getting Started
+## 📁 Project Structure
 
-### Prerequisites
-
-| Tool | Version |
-|---|---|
-| Python | ≥ 3.12 |
-| Git | Any |
+```text
+ai-ngo-dashboard/
+│
+├── 📄 app.py                          ← Main Streamlit Command Dashboard
+├── 📄 launch.js                       ← Node.js NeoFetch-style CLI launcher
+├── 📄 package.json                    ← Launcher npm configuration
+├── 📄 requirements.txt                ← Python dependencies
+├── 📄 .env.example                    ← Environment variable template
+├── 📄 setup_fedora.sh                 ← Automated Linux setup script
+│
+├── 📂 config/
+│   └── settings.py                   ← Pydantic settings (loads .env)
+│
+├── 📂 src/
+│   ├── 📂 api/
+│   │   ├── server.py                 ← FastAPI REST API (port 8000)
+│   │   └── dashboard.py              ← CrewAI-powered Streamlit dashboard
+│   ├── 📂 core/
+│   │   ├── engine.py                 ← Task orchestration pipeline
+│   │   ├── service.py                ← Volunteer service layer
+│   │   ├── scorer.py                 ← Priority & severity calculation
+│   │   ├── matcher.py                ← Vector search & semantic ranking
+│   │   ├── gamifier.py               ← Fatigue, XP & leveling logic
+│   │   ├── inventory_service.py      ← Inventory management service
+│   │   └── offline_engine.py         ← Local heuristic AI fallback
+│   ├── 📂 nlp/
+│   │   ├── classifier.py             ← NVIDIA NIM LLM interface
+│   │   ├── crew.py                   ← CrewAI multi-agent pipelines
+│   │   ├── summarizer.py             ← Context condensation
+│   │   └── vector_db.py              ← ChromaDB interface & embeddings
+│   └── 📂 repository/
+│       └── volunteer_repository.py   ← Data access layer
+│
+├── 📂 frontend/
+│   ├── index.html                    ← Static frontend entry point
+│   ├── style.css                     ← Frontend styles
+│   └── app.js                        ← Frontend JavaScript
+│
+├── 📂 data/                           ← JSON persistence layer
+│   ├── volunteers.json
+│   ├── missions.json
+│   ├── inventory.json
+│   ├── deployments.json
+│   ├── ngo_reports.json
+│   ├── sample_tasks.json
+│   ├── sample_volunteers.json
+│   └── volunteer_stats.json
+│
+└── 📂 tests/
+    └── test_ai_logic.py              ← Unit & integration tests
+```
 
 ---
 
-### Environment Setup
+## ✅ Prerequisites
 
-#### Option A — Automated Linux (Fedora/Ubuntu)
+| Tool | Version | Notes |
+|------|---------|-------|
+| **Python** | ≥ 3.12 | Required for all backend and dashboard code |
+| **pip** | Latest | Comes with Python |
+| **Node.js** | ≥ 16 | Required only for the CLI launcher (`npm run launch`) |
+| **NVIDIA NIM API Key** | — | Get yours at [build.nvidia.com](https://build.nvidia.com) |
+| **Git** | Any | For cloning the repository |
+
+> **Note:** Node.js is optional. You can run the app directly with Python commands if you prefer.
+
+---
+
+## 🚀 Installation & Setup
+
+### Option A — Automated Linux Setup (Fedora / Ubuntu)
+
 ```bash
+# Clone the repository
+git clone https://github.com/sxrabx/ai-ngo-dashboard.git
+cd ai-ngo-dashboard
+
+# Run the automated setup script
 chmod +x setup_fedora.sh
 ./setup_fedora.sh
+
+# Activate the created virtual environment
 source venv_linux/bin/activate
 ```
 
-#### Option B — Manual Setup (Windows/Mac)
-```powershell
-# 1. Create and activate a virtual environment
-python -m venv venv
-.\venv\Scripts\activate        # Windows
-# source venv/bin/activate     # Mac
+### Option B — Manual Setup (Windows / macOS / Linux)
 
-# 2. Install Python dependencies
+```bash
+# 1. Clone the repository
+git clone https://github.com/sxrabx/ai-ngo-dashboard.git
+cd ai-ngo-dashboard
+
+# 2. Create and activate a Python virtual environment
+python -m venv venv
+
+# Windows
+.\venv\Scripts\activate
+
+# macOS / Linux
+source venv/bin/activate
+
+# 3. Install all Python dependencies
 pip install -r requirements.txt
 
-# 3. Copy and configure environment variables
-copy .env.example .env
-# Edit .env with your NVIDIA API key
-
-# 4. Create missing directories
-mkdir src\data
-```
-
-### Launch the Platform
-
-#### 🚀 Premium Developer Launcher (Recommended)
-We've built a high-end, NeoFetch-inspired CLI launcher that manages both servers, handles port conflicts, and monitors system health.
-
-```powershell
-# 1. Install CLI dependencies (first time only)
+# 4. (Optional) Install Node.js launcher dependencies
 npm run install:deps
-
-# 2. Launch the entire system
-npm run launch
-```
-*Controls: Press **R** to restart all services, **Q** to quit.*
-
-#### 🛠️ Manual Launch (Legacy)
-If you prefer standard logs, use two separate terminals:
-
-```powershell
-# Terminal 1: Start the Dashboard
-python -m http.server 3000 -d frontend
-
-# Terminal 2: Start the REST API
-uvicorn src.api.server:app --reload --port 8000
 ```
 
 ---
 
-## 🔐 Environment Variables
+## 🔐 Configuration
 
-Copy `.env.example` to `.env` and configure:
+Copy the example environment file and add your API key:
 
-```env
-NVIDIA_API_KEY=your_nvidia_api_key_here
+```bash
+# Windows
+copy .env.example .env
+
+# macOS / Linux
+cp .env.example .env
 ```
 
-> **Security:** Never commit your `.env` file. It is excluded by `.gitignore`. Always use `.env.example` as the reference template.
+Then open `.env` and set your values:
+
+```env
+# Required — your NVIDIA NIM API key
+NVIDIA_API_KEY=your_nvidia_api_key_here
+
+# Optional — defaults shown below; change only if using a different endpoint
+NVIDIA_API_URL=https://integrate.api.nvidia.com/v1/chat/completions
+OPENAI_API_BASE=https://integrate.api.nvidia.com/v1
+```
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `NVIDIA_API_KEY` | ✅ Yes | — | API key for NVIDIA NIM (Llama 3.1 inference) |
+| `NVIDIA_API_URL` | No | `https://integrate.api.nvidia.com/v1/chat/completions` | NVIDIA NIM chat completions endpoint |
+| `OPENAI_API_BASE` | No | `https://integrate.api.nvidia.com/v1` | Base URL used by LangChain/LiteLLM adapter |
+
+> ⚠️ **Never commit your `.env` file.** It is listed in `.gitignore`. Use `.env.example` as the reference template only.
+
+> 💡 **Offline mode:** If `NVIDIA_API_KEY` is missing or the API is unreachable, the system automatically falls back to the local heuristics engine (`src/core/offline_engine.py`) — no crash, degraded-but-operational AI.
+
+---
+
+## ▶️ Running the Application
+
+### Option 1 — CLI Launcher (Recommended)
+
+The Node.js launcher starts both the static frontend (port 3000) and the FastAPI backend (port 8000) with a polished terminal UI.
+
+```bash
+# Install launcher CLI dependencies (first time only)
+npm run install:deps
+
+# Start the full platform
+npm run launch
+```
+
+**Controls:** Press `R` to restart all services · Press `Q` to quit.
+
+| Service | URL |
+|---------|-----|
+| Static Frontend | http://localhost:3000 |
+| FastAPI Backend | http://localhost:8000 |
+| API Documentation | http://localhost:8000/docs |
+
+---
+
+### Option 2 — Manual Launch (Individual Services)
+
+Run each service in its own terminal:
+
+**Main Streamlit Dashboard (recommended entry point):**
+```bash
+streamlit run app.py
+# Opens at http://localhost:8501
+```
+
+**FastAPI REST API Backend:**
+```bash
+uvicorn src.api.server:app --reload --port 8000
+# Opens at http://localhost:8000
+# Swagger UI at http://localhost:8000/docs
+```
+
+**Static Frontend only:**
+```bash
+python -m http.server 3000 -d frontend
+# Opens at http://localhost:3000
+```
+
+**Secondary CrewAI-powered Dashboard** (advanced AI triage view):
+```bash
+streamlit run src/api/dashboard.py
+# Opens at http://localhost:8501
+```
 
 ---
 
 ## 📡 API Reference
 
+The FastAPI backend exposes a REST API documented automatically at `http://localhost:8000/docs`.
+
 ### `POST /process`
-Classify a new incident report and receive full triage deployments.
+
+Classify an incident report and receive a full triage plan with scored volunteer matches and squad assembly.
 
 **Request Body:**
 ```json
 {
   "task": {
     "task_id": "T-100",
-    "description": "Massive flooding..."
+    "description": "Massive flooding in Sector Beta, approximately 45 people trapped on rooftops.",
+    "people_count": 45,
+    "location_coords": [28.61, 77.20]
   },
   "volunteers": [
-    { "id": "V1", "name": "John Doe", "skills": ["Medical"] }
+    {
+      "id": "V1",
+      "name": "Jane Doe",
+      "skills": ["Water Rescue", "Medical"],
+      "location_coords": [28.60, 77.19],
+      "available": true
+    }
   ]
 }
 ```
 
+**Response:** Structured JSON with AI classification, severity score, matched squad (or Mega-Squad splits), and gamification rewards.
+
 ---
 
-## 🗺️ Project Roadmap
+## 📝 Usage Notes
 
-- [x] Multi-agent CrewAI extraction pipeline
-- [x] Semantic vector matching via ChromaDB
-- [x] Streamlit Command Center with Plotly analytics
-- [x] Proximity-first logic and Gamified fatigue tracking
-- [x] Automated Mega-Squad assembly
+- **First run with a fresh `data/` directory:** The dashboard will show empty metrics until you add volunteers via `data/volunteers.json`. See `data/sample_volunteers.json` for the expected schema.
+- **PDF Upload:** Navigate to **Mission Lab → PDF Extraction** and upload any NGO damage report PDF. The system extracts the first 1,000 characters for mission generation.
+- **Code Red Alert:** When average volunteer energy drops below 30%, the dashboard displays a pulsing red alert banner. Use **Volunteer Roster → Initiate Recovery Cycle** to restore energy.
+- **AI Mode Indicator:** The sidebar shows whether the system is running in **Cloud (NVIDIA NIM)** or **Offline (Local Heuristics)** mode. Offline mode activates automatically on API failure.
+- **Running tests:**
+  ```bash
+  python -m pytest tests/
+  ```
+
+---
+
+## 🗺️ Roadmap
+
+### ✅ Completed (MVP)
+- [x] Streamlit Command Dashboard with dark-mode UI and Plotly analytics
+- [x] NVIDIA NIM (Llama 3.1) mission generation pipeline
+- [x] Offline heuristic AI fallback for zero-downtime operation
+- [x] Folium interactive deployment map (missions + volunteers)
+- [x] PDF damage report ingestion and mission extraction
+- [x] ChromaDB semantic volunteer matching
+- [x] Multi-tier squad assembly (Standard / Strike Force / Mega-Squad / Regiment)
+- [x] Gamified energy & XP fatigue tracking system
+- [x] Inventory & Logistics management module
+- [x] FastAPI REST backend with auto-generated Swagger docs
+- [x] Node.js NeoFetch-style CLI launcher
+- [x] Multi-lingual translation via CrewAI agents
+
+### 🔭 Phase 2: Future Vision
+- [ ] Live visual deployment tracking with animated Folium/Plotly maps
+- [ ] External hazard API integration (live traffic, weather overlays)
+- [ ] Simulated mobile push notifications (WhatsApp/SMS mock)
+- [ ] Predictive resource forecasting using historical mission data
 
 ---
 
@@ -316,20 +415,48 @@ Classify a new incident report and receive full triage deployments.
 
 Contributions, issues, and feature requests are welcome!
 
-1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/your-feature-name`
-3. Commit your changes: `git commit -m 'feat: add some feature'`
-4. Push to the branch: `git push origin feature/your-feature-name`
-5. Open a Pull Request
+1. **Fork** the repository
+2. **Create** your feature branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Commit** your changes:
+   ```bash
+   git commit -m 'feat: add some feature'
+   ```
+4. **Push** to the branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. **Open a Pull Request** and describe your changes
+
+Please ensure your code follows the existing project style and does not break existing functionality. Run `python -m pytest tests/` before submitting.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for full details.
+
+```
+MIT License — Copyright (c) 2026 AI Intelligence Team
+```
+
+---
+
+## 🙏 Credits
+
+Built with ❤️ for faster disaster response, smarter volunteer coordination, and more resilient NGOs.
+
+- **AI Inference:** [NVIDIA NIM](https://build.nvidia.com) — `meta/llama-3.1-8b-instruct`
+- **Agent Orchestration:** [CrewAI](https://crewai.com)
+- **Vector Database:** [ChromaDB](https://www.trychroma.com)
+- **Embeddings:** [Sentence-Transformers](https://sbert.net) — `all-MiniLM-L6-v2`
+- **Dashboard:** [Streamlit](https://streamlit.io) · [Plotly](https://plotly.com) · [Folium](https://python-visualization.github.io/folium)
+- **API:** [FastAPI](https://fastapi.tiangolo.com)
 
 ---
 
 <p align="center">
-  Built with ❤️ for better disaster response, faster triage, and smarter NGOs.
+  <sub>🛰️ NGO AI Mission Intelligence System — Operational. Intelligence Online.</sub>
 </p>
