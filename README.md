@@ -90,7 +90,9 @@ An offline AI fallback mode ensures the platform stays operational even when the
 | **Mission Control** | Submit free-text crisis reports or upload PDF damage assessments. AI generates a structured mission plan (category, priority, volunteers needed) automatically. |
 | **Operations Hub** | Live metrics — active missions, ready personnel, overall readiness %. Includes a Leaflet interactive map and Plotly readiness gauge. |
 | **Personnel Database** | Live roster showing energy levels (colour-coded), XP, rank, and availability. |
-| **Logistics Command** | Browse the NGO's asset catalogue — medical kits, rescue gear, survival supplies, satellite uplinks, drone fleet, and mission-ready kit configurations. |
+| **Logistics Command** | Browse assets with real-time **In Use** tracking. Automatically deducts stock and increases active deployment count upon mission dispatch. |
+| **Mission Persistence** | Seamlessly switch between historical operations. Full reports (coordinates, squads, gear) are saved and restored instantly. |
+| **Intelligence Recovery**| Re-synthesise tactical reports from historical logs for operations where data was not originally archived. |
 | **System Health** | Real-time uptime, API gateway status, active AI mode (Cloud vs. Offline), and live telemetry feed. |
 
 ### 🤖 AI Intelligence Engine

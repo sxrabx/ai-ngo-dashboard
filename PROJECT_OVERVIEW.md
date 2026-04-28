@@ -78,6 +78,9 @@ d:\Hackathon Google\
 *   **Distance-Aware Smart Triage**: Ranks volunteers using a weighted score that identifies **Fastest Responders** who can arrive before the main squad.
 *   **Mega-Squad Scaling**: Automatic tactical splitting into **Team Alpha/Beta** for large-scale incidents (>40 victims) with dedicated Leads.
 *   **Volunteer Fatigue & Sustainability**: Live energy tracking (100-0%) and gamified burnout protection.
+*   **Tactical Persistence**: Seamlessly save and restore full mission reports (coordinates, squad, gear) when switching historical operations.
+*   **Intelligence Recovery Protocol**: Re-synthesize tactical reports from legacy chat logs if data was not originally archived.
+*   **Real-time Inventory Synchronization**: Dynamic tracking of available stock vs. "In Use" items across all tactical deployments.
 *   **Enterprise Impact Analytics**: A dynamically updating dashboard showing hours saved, efficiency metrics, and live rosters.
 
 ---
@@ -122,6 +125,9 @@ python src/api/server.py
 - [x] **Smart Triage (Proximity-First)**: Real-time calculation using coordinate distance parsing to find Fast Responders.
 - [x] **Mega-Squad Logic**: Handlers for high-impact disasters with dual-leadership teams (Team Alpha/Beta).
 - [x] **Workload Balancing**: Prevent volunteer burnout via the dynamic Gamification/Fatigue Tracking System.
+- [x] **Tactical Persistence**: Implemented full mission state saving and historical context switching.
+- [x] **Intelligence Recovery Engine**: Re-synthesis of missing tactical reports from historical logs.
+- [x] **Logistics Synchronisation**: Real-time inventory tracking for "In Use" vs "Available" tactical assets.
 
 ### 🚀 Phase 2: Future Vision
 - [ ] **Interactive "Glow Up" Map**: Live visual deployment tracking using Folium.
