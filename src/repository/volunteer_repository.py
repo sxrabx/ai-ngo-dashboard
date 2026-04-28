@@ -3,7 +3,7 @@ import os
 import threading
 
 class VolunteerRepository:
-    _lock = threading.Lock()
+    _lock = threading.RLock()
 
     def __init__(self, file_path=None):
         if file_path is None:
@@ -69,3 +69,22 @@ class VolunteerRepository:
                 stats[v_id]['energy'] = 100
             self._save_no_lock(stats)
             return True
+    def bulk_update(self, volunteer_updates):
+        """
+        Updates multiple volunteers in a single atomic operation.
+        volunteer_updates: Dict of {id: {stats_dict}}
+        """
+        with self._lock:
+            stats = self._load_no_lock()
+            for v_id, updates in volunteer_updates.items():
+                if v_id not in stats:
+                    stats[v_id] = {
+                        "total_points": 0, 
+                        "tasks_completed": 0, 
+                        "badges": [], 
+                        "categories": {}, 
+                        "energy": 100
+                    }
+                stats[v_id].update(updates)
+            self._save_no_lock(stats)
+        return True

@@ -11,11 +11,65 @@ let stats = { missionsCompleted: 0 };
 try { stats = JSON.parse(localStorage.getItem('stats')) || { missionsCompleted: 0 }; } catch(e) { stats = { missionsCompleted: 0 }; }
 let currentTheme = localStorage.getItem('theme') || 'light';
 let map = null;
+/* --- INTELLIGENCE RECOVERY --- */
+async function recoverIntelligence() {
+    const chat = allChats.find(c => c.id === currentChatId);
+    if (!chat) return;
+    const firstUserMsg = chat.messages.find(m => m.role === 'user');
+    if (!firstUserMsg) return;
+
+    showView('welcome');
+    const loaderContainer = document.querySelector('.system-loader');
+    if (loaderContainer) loaderContainer.classList.remove('hidden');
+    updateLoader(20, 'Accessing neural archives...');
+
+    try {
+        const res = await fetch(`${API_BASE}/process`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                task: { 
+                    task_id: currentChatId, 
+                    description: firstUserMsg.content 
+                },
+                volunteers: []
+            })
+        });
+        const data = await res.json();
+        
+        missionData = data;
+        chat.missionData = data;
+        saveChats();
+        
+        updateMissionView(data);
+        await fetchGearRecommendations(data.ai_reasoning.understood, data.people_count);
+        showView('mission');
+        addMessage('system', 'Neural records recovered. Tactical intelligence re-synthesized.');
+    } catch (e) {
+        console.error("Recovery failed", e);
+        updateLoader(0, 'Recovery protocol failed.');
+    }
+}
+window.recoverIntelligence = recoverIntelligence;
+
+let startTime = Date.now();
 let activityMap = null;
 let gauge = null;
-let startTime = Date.now();
 let markers = {};
 let polylines = [];
+let rosterLoaded = false;
+
+function startUptimeCounter() {
+    setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const h = Math.floor(elapsed / 3600000).toString().padStart(2, '0');
+        const m = Math.floor((elapsed % 3600000) / 60000).toString().padStart(2, '0');
+        const s = Math.floor((elapsed % 60000) / 1000).toString().padStart(2, '0');
+        const uptimeStr = `${h}:${m}:${s}`;
+        const uptimeEl = document.getElementById('health-uptime');
+        if (uptimeEl) uptimeEl.innerText = uptimeStr;
+    }, 1000);
+}
 
 // --- DOM ELEMENTS ---
 const elements = {
@@ -51,6 +105,11 @@ const views = {
 // --- INITIALIZATION ---
 function init() {
     try {
+        startTime = Date.now();
+        startUptimeCounter();
+        fetchRoster();
+        fetchInventory();
+        fetchActivities();
         console.log("Initializing NGO AI Command Center...");
         bindEvents();
         
@@ -64,8 +123,12 @@ function init() {
         }
 
         renderHistoryList();
-        if (localRoster.length === 0) fetchRoster();
-        else renderRoster();
+        if (localRoster.length === 0) {
+            fetchRoster();
+        } else {
+            rosterLoaded = true;
+            renderRoster();
+        }
 
         try { initMap(); } catch(e) { console.error("Map init failed", e); }
         try { initActivityMap(); } catch(e) { console.error("Activity Map init failed", e); }
@@ -79,18 +142,14 @@ function init() {
         console.error("Initialization failed:", e);
     }
 
-    // Auto-Recovery Timer
+    // Auto-Recovery Timer (UI Sync)
     setInterval(() => {
         try {
-            localRoster.forEach(v => {
-                if (v.energy < 100) v.energy = Math.min(100, v.energy + 5);
-            });
-            localStorage.setItem('roster', JSON.stringify(localRoster));
-            renderRoster();
+            // Fetch fresh roster to sync with server-side recovery
+            fetchRoster();
             updateAnalytics();
-            updateMap();
         } catch(e) {}
-    }, 120000);
+    }, 300000); // 5 minutes
 }
 
 function bindEvents() {
@@ -118,16 +177,58 @@ function bindEvents() {
     if (elements.deployBtn) elements.deployBtn.onclick = () => window.confirmDispatch();
     if (elements.newChatBtn) elements.newChatBtn.onclick = () => createNewChat();
     
+    // Add Asset Logic
     const addAssetBtn = document.getElementById('add-asset-btn');
-    if (addAssetBtn) {
-        addAssetBtn.onclick = () => {
-            const itemName = prompt("Enter asset name to update:");
-            if (itemName) {
-                const qty = prompt("Enter additional quantity:");
-                if (qty) {
-                    alert(`Stock request submitted for ${itemName}. Updated by ${qty} units.`);
-                    // In a real app, this would be a POST to /inventory/update
+    const assetModal = document.getElementById('asset-modal');
+    const saveAssetBtn = document.getElementById('save-asset-btn');
+
+    if (addAssetBtn && assetModal) {
+        addAssetBtn.onclick = () => assetModal.classList.remove('hidden');
+    }
+
+    if (saveAssetBtn) {
+        saveAssetBtn.onclick = async () => {
+            const name = document.getElementById('new-asset-name').value;
+            const cat = document.getElementById('new-asset-category').value;
+            const qty = parseInt(document.getElementById('new-asset-qty').value) || 0;
+
+            if (name) {
+                saveAssetBtn.innerText = "SYNCING...";
+                saveAssetBtn.disabled = true;
+                
+                try {
+                    const res = await fetch(`${API_BASE}/inventory/add`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, category: cat, qty })
+                    });
+                    
+                    if (res.ok) {
+                        assetModal.classList.add('hidden');
+                        document.getElementById('new-asset-name').value = '';
+                        document.getElementById('new-asset-qty').value = '';
+                        addMessage('system', `Logistics updated: ${name} (+${qty} units) synced to warehouse.`);
+                        // Force Full Refresh
+                        await fetchInventory();
+                    }
+                } catch(e) {
+                    addMessage('system', "Warehouse sync failed.");
+                } finally {
+                    saveAssetBtn.innerText = "SYNC TO WAREHOUSE";
+                    saveAssetBtn.disabled = false;
                 }
+            }
+        };
+    }
+
+    // Reset Energy Logic
+    const resetEnergyBtn = document.getElementById('reset-energy-btn');
+    if (resetEnergyBtn) {
+        resetEnergyBtn.onclick = async () => {
+            const res = await fetch(`${API_BASE}/roster/reset-energy`, { method: 'POST' });
+            if (res.ok) {
+                addMessage('system', "Emergency Recovery Initiated. All fatigue levels cleared.");
+                await fetchRoster();
             }
         };
     }
@@ -201,11 +302,11 @@ function getEnergyColor(p) {
 }
 
 function getStatusInfo(p) {
-    if (p >= 90) return { label: "Energized", class: "ready" };
-    if (p >= 75) return { label: "Ready", class: "ready" };
-    if (p >= 40) return { label: "Moderate", class: "ready" };
+    if (p >= 90) return { label: "Energized", class: "energized" };
+    if (p >= 70) return { label: "Ready", class: "ready" };
+    if (p >= 40) return { label: "Moderate", class: "moderate" };
     if (p >= 15) return { label: "Fatigued", class: "fatigued" };
-    return { label: "Critical", class: "fatigued" };
+    return { label: "Critical", class: "critical" };
 }
 
 // --- CHAT LOGIC ---
@@ -231,11 +332,58 @@ function saveChats() {
 function loadChat(id) {
     const chat = allChats.find(c => c.id === id);
     if (!chat) return;
+    
     currentChatId = id;
+    
+    // 1. Reset UI States
+    updateLoader(0, 'Neural uplink idle');
+    const pc = document.getElementById('loader-percent');
+    if (pc) pc.innerText = '0%';
+    
+    // 2. Clear and Render Messages
     if (elements.chatMessages) {
         elements.chatMessages.innerHTML = '';
-        chat.messages.forEach(msg => displayMessage(msg.role, msg.content));
+        if (chat.messages && Array.isArray(chat.messages)) {
+            chat.messages.forEach(msg => displayMessage(msg.role, msg.content));
+        }
     }
+
+    // 3. Restore Mission View
+    if (chat.missionData) {
+        missionData = JSON.parse(JSON.stringify(chat.missionData));
+        try {
+            updateMissionView(missionData);
+            if (missionData.recommended_gear) renderLoadout(missionData.recommended_gear);
+            showView('mission');
+        } catch (err) {
+            console.error("Mission UI Restore Error:", err);
+            showView('welcome');
+        }
+    } else {
+        missionData = null;
+        // Hide loader for historical viewing of operations without mission data
+        const loaderContainer = document.querySelector('.system-loader');
+        if (loaderContainer) loaderContainer.classList.add('hidden');
+        
+        // If there's content but no report, offer recovery
+        const firstUserMsg = chat.messages.find(m => m.role === 'user');
+        const welcomeTitle = document.querySelector('.welcome-container h2');
+        const welcomeDesc = document.querySelector('.welcome-container p');
+        
+        if (firstUserMsg && welcomeTitle && welcomeDesc) {
+            welcomeTitle.innerText = "Legacy Record Detected";
+            welcomeDesc.innerHTML = `Operation log found, but tactical report was not archived. <br><br>
+                <button onclick="recoverIntelligence()" class="suggestion-btn" style="margin: 0 auto; background: var(--ds-gray-900); color: white;">
+                    <i data-lucide="refresh-cw" style="width:14px"></i> Re-Synthesize Report
+                </button>`;
+            if (window.lucide) window.lucide.createIcons();
+        } else if (welcomeTitle) {
+            welcomeTitle.innerText = "Awaiting Intelligence.";
+        }
+
+        showView('welcome');
+    }
+
     renderHistoryList();
     saveChats();
 }
@@ -317,6 +465,13 @@ async function handleSend() {
     elements.userInput.value = '';
     
     showView('welcome');
+    
+    // Reset welcome view for new load
+    const welcomeTitle = document.querySelector('.welcome-container h2');
+    if (welcomeTitle) welcomeTitle.innerText = "Awaiting Intelligence.";
+    const loaderContainer = document.querySelector('.system-loader');
+    if (loaderContainer) loaderContainer.classList.remove('hidden');
+    
     updateLoader(10, 'Establishing neural bridge...');
     
     try {
@@ -337,6 +492,13 @@ async function handleSend() {
                 addMessage('system', data.message);
             } else {
                 missionData = data;
+                
+                // Link mission data to current operation
+                const chat = allChats.find(c => c.id === currentChatId);
+                if (chat) {
+                    chat.missionData = data;
+                    saveChats();
+                }
                 
                 // Update Health Panel AI Mode
                 const aiModeEl = document.getElementById('health-ai-mode');
@@ -367,7 +529,7 @@ function updateLoader(percent, text) {
 function revealMissionPlan(data) {
     showView('mission');
     updateMissionView(data);
-    fetchGearRecommendations(data.ai_reasoning.understood);
+    fetchGearRecommendations(data.ai_reasoning.understood, data.people_count);
     if (typeof gsap !== 'undefined') {
         gsap.fromTo("#mission-view", 
             { opacity: 0, filter: "blur(20px)", y: 20 }, 
@@ -383,27 +545,48 @@ function updateMissionView(data) {
     if (pri) pri.innerText = data.priority_score;
     const urgency = document.getElementById('urgency-tag');
     if (urgency) {
-        urgency.innerText = data.urgency_level;
+        urgency.innerText = `${data.recommended_squad.tier} | ${data.urgency_level}`;
         urgency.className = `status-pill ${data.priority_score > 70 ? 'fatigued' : 'ready'}`;
     }
     const brief = document.getElementById('ai-briefing');
-    if (brief) brief.innerText = data.ai_reasoning.understood;
+    if (brief) {
+        brief.innerText = `${data.ai_reasoning.understood} \n\nTACTICAL REQUIREMENT: ${data.recommended_squad.required_manpower} Specialists deployed for ${data.people_count} affected individuals.`;
+    }
+
+    const xpReward = document.getElementById('reward-points');
+    if (xpReward) xpReward.innerText = `+${data.potential_reward_points} XP`;
     
     const squadList = document.getElementById('squad-list');
     if (squadList) {
         squadList.innerHTML = '';
-        const members = data.recommended_squad.is_split ? data.recommended_squad.team_alpha : data.recommended_squad;
-        members.forEach(m => {
-            const card = document.createElement('div');
-            card.className = 'unit-card';
-            card.innerHTML = `
-                <div class="unit-name">${m.name}</div>
-                <div class="match-meta">
-                    <span class="mono-label" style="font-size: 9px">Affinity</span>
-                    <span class="score-pill">${m.match_score}%</span>
-                </div>
-            `;
-            squadList.appendChild(card);
+        
+        const squadData = data.recommended_squad;
+        const teams = squadData.is_split 
+            ? { "TEAM ALPHA": squadData.team_alpha, "TEAM BETA": squadData.team_beta, "TEAM GAMMA": squadData.team_gamma, "TEAM DELTA": squadData.team_delta }
+            : { "RESCUE CELL": squadData.team_alpha };
+
+        Object.entries(teams).forEach(([teamName, members]) => {
+            if (!members || members.length === 0) return;
+
+            // Add Team Header
+            const header = document.createElement('div');
+            header.className = 'mono-label';
+            header.style = 'grid-column: 1 / -1; margin-top: 16px; color: var(--preview-pink); font-size: 10px';
+            header.innerText = teamName;
+            squadList.appendChild(header);
+
+            members.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'unit-card';
+                card.innerHTML = `
+                    <div class="unit-name">${m.name}</div>
+                    <div class="match-meta">
+                        <span class="mono-label" style="font-size: 9px">Affinity</span>
+                        <span class="score-pill">${m.match_score}%</span>
+                    </div>
+                `;
+                squadList.appendChild(card);
+            });
         });
     }
 
@@ -421,22 +604,89 @@ function updateMissionView(data) {
 }
 
 // --- DISPATCH & SIMULATION ---
-window.confirmDispatch = function() {
+window.confirmDispatch = async function() {
     if (!missionData) return;
-    const squad = missionData.recommended_squad.is_split 
-        ? [...missionData.recommended_squad.team_alpha, ...missionData.recommended_squad.team_beta]
-        : missionData.recommended_squad;
+    
+    const btn = elements.deployBtn;
+    if (!btn) return;
 
-    const loss = missionData.priority_score > 70 ? 25 : 12;
-    applyEnergyLoss(squad, loss);
+    // 1. Initial Acknowledgment (Visual feedback)
+    btn.innerText = "UPLINKING...";
+    btn.disabled = true;
+    btn.style.opacity = "0.7";
     
-    stats.missionsCompleted++;
-    localStorage.setItem('stats', JSON.stringify(stats));
-    
-    addMessage('system', 'Dispatch confirmed. Squad deployed to target zone.');
-    renderRoster();
-    updateAnalytics();
-    showView('analytics');
+    // Collect Squad IDs
+    let squadIds = [];
+    if (missionData.recommended_squad.is_split) {
+        const fullSquad = [
+            ...missionData.recommended_squad.team_alpha,
+            ...missionData.recommended_squad.team_beta,
+            ...(missionData.recommended_squad.team_gamma || [])
+        ];
+        squadIds = fullSquad.map(v => v.id);
+    } else {
+        squadIds = missionData.recommended_squad.team_alpha.map(v => v.id);
+    }
+
+    // Collect Recommended Items
+    const items = missionData.recommended_gear ? missionData.recommended_gear.map(g => ({ name: g.name, qty: g.qty })) : [];
+
+    // Sanitize and Clean Payload
+    const sanitizedXp = parseInt(missionData.potential_reward_points) || 0;
+    const sanitizedItems = items.map(i => ({
+        name: String(i.name),
+        qty: parseInt(i.qty) || 1
+    }));
+
+    try {
+        const response = await fetch(`${API_BASE}/deploy`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                squad_ids: squadIds,
+                items: sanitizedItems,
+                xp_reward: sanitizedXp,
+                category: String(missionData.category || "General"),
+                urgency: String(missionData.urgency_level || "Medium")
+            })
+        });
+
+        if (response.ok) {
+            btn.classList.add('activated');
+            btn.innerText = `SQUAD DISPATCHED: ${squadIds.length} SPECIALISTS`;
+            btn.disabled = true;
+            btn.style.opacity = "1";
+            
+            addMessage('system', `Tactical Deployment Confirmed. Squad is en-route. [Fatigue: -${missionData.urgency_level || 'MED'}]`);
+            
+            setTimeout(async () => {
+                // Refresh all tactical lists
+                await fetchRoster(); 
+                if (typeof fetchInventory === 'function') await fetchInventory();
+                
+                updateAnalytics();
+                showView('analytics');
+                
+                // Reset for next op
+                btn.classList.remove('activated');
+                btn.innerText = "CONFIRM DISPATCH";
+                btn.disabled = false;
+            }, 2000);
+        } else {
+            throw new Error("API Refused Command");
+        }
+    } catch (err) {
+        console.error("Dispatch Sync Failed:", err);
+        btn.innerText = "UPLINK FAILED";
+        btn.style.background = "var(--ship-red)";
+        setTimeout(() => {
+            btn.innerText = "CONFIRM DISPATCH";
+            btn.style.background = "";
+            btn.disabled = false;
+            btn.style.opacity = "1";
+        }, 3000);
+        addMessage('system', 'Neural downlink error during deployment. Check local server status.');
+    }
 };
 
 function applyEnergyLoss(squad, amount) {
@@ -477,10 +727,19 @@ async function fetchRoster() {
     try {
         const res = await fetch(`${API_BASE}/roster`);
         const data = await res.json();
-        localRoster = data.map(v => ({ ...v, energy: 100, total_points: v.total_points || 0 }));
+        localRoster = data.map(v => ({ 
+            ...v, 
+            energy: v.energy !== undefined ? v.energy : 100, 
+            total_points: v.total_points || 0 
+        }));
+        rosterLoaded = true;
         assignRanks();
         renderRoster();
-    } catch (e) {}
+        updateAnalytics();
+    } catch (e) {
+        rosterLoaded = true;
+        updateAnalytics();
+    }
 }
 
 function assignRanks() {
@@ -705,7 +964,9 @@ function updateGauge() {
         Plotly.restyle('readiness-gauge', 'value', [avgEnergy]);
         
         // Code Red Check
-        toggleCodeRed(avgEnergy < 30);
+        // After load: alert if avg energy is low OR if roster is completely empty
+        const isCritical = rosterLoaded && (avgEnergy < 30 || localRoster.length === 0);
+        toggleCodeRed(isCritical);
     } catch(e) {}
 }
 
@@ -745,6 +1006,7 @@ async function fetchInventory() {
         
         if (document.getElementById('inv-total')) document.getElementById('inv-total').innerText = stats.total_items;
         if (document.getElementById('inv-low')) document.getElementById('inv-low').innerText = stats.low_stock;
+        if (document.getElementById('inv-active')) document.getElementById('inv-active').innerText = stats.total_deployed;
         
         renderInventory(data);
     } catch (e) {
@@ -789,21 +1051,29 @@ function renderInventory(categories) {
         const tr = document.createElement('tr');
         let qty = 0;
         let unit = 'units';
+        let deployed = 0;
         
-        if (typeof details === 'number') qty = details;
-        else if (details && typeof details === 'object') {
+        if (typeof details === 'number') {
+            qty = details;
+        } else if (details && typeof details === 'object') {
             qty = details.qty ?? details.stock ?? details.stock_count ?? details.base_units ?? 0;
             unit = details.unit || details.uom || 'units';
+            deployed = details.deployed || 0;
         }
 
         const statusClass = qty < 10 ? 'fatigued' : 'ready';
         
+        // Use defaults for missing fields
+        const condition = details.condition || details.maintenance_status || 'Operational';
+        const location = details.location || details.storage_location || 'Main Warehouse';
+        
         tr.innerHTML = `
-            <td><b>${name.replace(/_/g, ' ').toUpperCase()}</b></td>
+            <td><b style="color:var(--ds-gray-1000)">${name.replace(/_/g, ' ').toUpperCase()}</b></td>
             <td><span class="mono-label" style="font-size:10px">${cat}</span></td>
             <td><span class="score-pill ${statusClass}">${qty} ${unit}</span></td>
-            <td>${details.condition || details.maintenance_status || 'Operational'}</td>
-            <td>${details.location || details.storage_location || 'Sector 4 Vault'}</td>
+            <td><span class="mono-label" style="color:var(--preview-pink)">${deployed} ${unit}</span></td>
+            <td><span style="opacity:0.8">${condition}</span></td>
+            <td><span style="opacity:0.8">${location}</span></td>
             <td><button class="suggestion-btn" style="padding:4px 8px; font-size:10px">Details</button></td>
         `;
         tbody.appendChild(tr);
@@ -878,7 +1148,7 @@ function renderActivities(activities) {
     });
 }
 
-async function fetchGearRecommendations(description) {
+async function fetchGearRecommendations(description, people_count = 1) {
     const list = document.getElementById('loadout-list');
     if (list) list.innerHTML = '<p class="body-small">Analyzing tactical requirements...</p>';
     
@@ -886,9 +1156,18 @@ async function fetchGearRecommendations(description) {
         const res = await fetch(`${API_BASE}/recommend-gear`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ description })
+            body: JSON.stringify({ description, people_count })
         });
         const recommendations = await res.json();
+        missionData.recommended_gear = recommendations; // Save for dispatch
+        
+        // Sync back to chat storage
+        const chat = allChats.find(c => c.id === currentChatId);
+        if (chat) {
+            chat.missionData = missionData;
+            saveChats();
+        }
+
         renderLoadout(recommendations);
     } catch (e) {
         console.error("Gear recommendation failed", e);
@@ -913,10 +1192,7 @@ function renderLoadout(items) {
         card.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:start">
                 <div class="unit-name" style="font-size:12px">${item.name}</div>
-                <div class="score-pill ready" style="font-size:9px">Stock: ${item.qty}</div>
-            </div>
-            <div style="margin-top:8px; display:flex; gap:6px">
-                <button class="suggestion-btn" style="padding:4px 8px; font-size:9px; background:var(--ds-gray-900); color:white">RESERVE</button>
+                <div class="score-pill ready" style="font-size:9px">Req: ${item.qty}</div>
             </div>
         `;
         list.appendChild(card);

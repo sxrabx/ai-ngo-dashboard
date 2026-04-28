@@ -12,8 +12,7 @@ This repository contains the "Intelligence Layer" for a volunteer management sys
 *   **ChromaDB**: Local Persistent Vector Database for semantic matching.
 *   **Sentence Transformers (all-MiniLM-L6-v2)**: Generating 384-dimensional semantic embeddings for volunteer skills.
 *   **FastAPI**: Backend REST API for high-performance integration.
-*   **Streamlit**: Interactive Command Center and mission visualization with premium custom CSS.
-*   **Pandas & Plotly**: Analytical processing, impact metrics, and dynamic visualizations.
+*   **Vanilla JS & CSS**: Responsive, high-performance command center frontend.
 
 ---
 
@@ -33,10 +32,8 @@ This repository contains the "Intelligence Layer" for a volunteer management sys
 
 ### Primary Dependencies
 *   `fastapi`: Web framework for API.
-*   `streamlit`: UI/Dashboard framework.
 *   `chromadb`: Vector storage.
 *   `crewai`: Agentic orchestration.
-*   `plotly`: Advanced data visualization.
 *   `python-dotenv`: Environment variable management.
 
 ---
@@ -54,7 +51,6 @@ d:\Hackathon Google\
 │   └── volunteer_stats.json # Gamification & Fatigue persistence
 ├── src/                  # Core Intelligence Layer
 │   ├── api/              # Entry Points & Application Layer
-│   │   ├── dashboard.py  # Streamlit Command Center (Premium UI)
 │   │   └── server.py     # FastAPI Backend Integrations
 │   ├── core/             # Domain Logic & Algorithms
 │   │   ├── engine.py     # High-level task orchestration
@@ -100,11 +96,11 @@ Create a `.env` file in the root directory:
 NVIDIA_API_KEY=your_key_here
 ```
 
-### 3. Launch the AI Dashboard (Mission Control)
+### 3. Launch the Command Center (Frontend)
 ```powershell
-streamlit run src/api/dashboard.py
+python -m http.server 3000 --directory frontend
 ```
-*Accessible at: http://127.0.0.1:8501*  
+*Accessible at: http://127.0.0.1:3000*  
 **Test Workflow:** Use the sidebar to upload a report (e.g., `test_report_extreme.txt`) and click `🪄 AI Auto-Extract` to activate the CrewAI agentic pipeline.
 
 ### 4. Launch the AI API (Backend)
@@ -122,13 +118,13 @@ python src/api/server.py
 - [x] **Autonomous NGO Report Extraction**: Multi-agent CrewAI pipeline auto-generating actionable JSON tasks directly from uploaded chaotic incident reports.
 - [x] **NLP Upgrade (Semantic Matching)**: Upgraded from keyword matching to ChromaDB vector embeddings.
 - [x] **Multi-lingual Translation**: CrewAI Agents automatically translating live incident reports into Spanish and French.
-- [x] **Premium UI Revamp**: Implemented a "Dark Mode Elite" Streamlit interface with Inter/Playfair typography and glassmorphism.
+- [x] **Premium UI Revamp**: Implemented a "Dark Mode Elite" Vanilla JS interface with Inter/Playfair typography and glassmorphism.
 - [x] **Smart Triage (Proximity-First)**: Real-time calculation using coordinate distance parsing to find Fast Responders.
 - [x] **Mega-Squad Logic**: Handlers for high-impact disasters with dual-leadership teams (Team Alpha/Beta).
 - [x] **Workload Balancing**: Prevent volunteer burnout via the dynamic Gamification/Fatigue Tracking System.
 
 ### 🚀 Phase 2: Future Vision
-- [ ] **Interactive "Glow Up" Map**: Live visual deployment tracking using Folium/Plotly.
+- [ ] **Interactive "Glow Up" Map**: Live visual deployment tracking using Folium.
 - [ ] **External API Hazard Integration**: Using live traffic overlays (e.g., Google Maps) to actively re-route responders.
 - [ ] **Mock Mobile Notifications**: Simulated UI view for volunteer WhatsApp/SMS triggers.
 - [ ] **Predictive Resource Forecasting**: Advanced AI to predict regional resource spikes.

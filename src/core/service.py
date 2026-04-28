@@ -42,13 +42,13 @@ class VolunteerService:
         
         return profiles
 
-    def update_after_mission(self, volunteer_id, points, category):
+    def update_after_mission(self, volunteer_id, points, category, energy_cost=25):
         """
         Updates volunteer stats via the repository.
         """
         # Note: Logic currently resides in gamifier.py, but we wrap it for consistency
         from src.core.gamifier import update_volunteer_after_task
-        return update_volunteer_after_task(volunteer_id, points, category)
+        return update_volunteer_after_task(volunteer_id, points, category, energy_cost=energy_cost)
 
     def reset_all_energy(self):
         """Resets all energy levels to 100% via the repository."""

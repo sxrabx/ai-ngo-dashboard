@@ -203,49 +203,49 @@
                             <div class="mono-label" style="margin-bottom:4px">Incident Category</div>
                             <h2 id="task-category">Unclassified</h2>
                         </div>
-                        <div style="text-align:right">
+                        <div style="display:flex; gap:12px; align-items:center">
                             <span id="urgency-tag" class="status-pill fatigued">Critical</span>
                         </div>
                     </div>
 
-                    <div class="bento-grid">
+                    <div class="bento-grid mission-grid">
                         <div class="bento-card span-2">
                             <div class="mono-label">AI Strategic Briefing</div>
-                            <p id="ai-briefing" class="body-small" style="color:var(--ds-gray-900); margin:8px 0">Processing...</p>
+                            <p id="ai-briefing" class="body-small" style="color:var(--ds-gray-900); margin:12px 0; line-height:1.6">Processing...</p>
                             <div style="margin-top:auto; display:flex; gap:12px">
-                                <button id="deploy-btn" class="suggestion-btn" style="background:var(--ds-gray-900); color:white; border:none; padding:12px 24px; border-radius:6px">CONFIRM DISPATCH</button>
+                                <button id="deploy-btn" class="suggestion-btn">CONFIRM DISPATCH</button>
                                 <button id="show-thinking-btn" class="suggestion-btn">View Log Trace</button>
                             </div>
                         </div>
 
                         <div class="bento-card">
-                            <div class="mono-label">Priority Index</div>
-                            <div class="metric-value" id="priority-score">00</div>
-                            <div class="mono-label" style="margin-top:auto">Potential Reward: <span id="reward-points" style="color:var(--preview-pink)">+0 XP</span></div>
-                        </div>
-
-                        <div class="bento-card span-2">
-                            <div class="mono-label">Unit Allocation</div>
-                            <div id="squad-list" class="unit-list">
-                                <!-- Squad cards injected -->
+                            <div class="mono-label">Tactical Metrics</div>
+                            <div style="display:flex; flex-direction:column; gap:16px; margin-top:8px">
+                                <div>
+                                    <div class="mono-label" style="font-size:10px">Priority Index</div>
+                                    <div class="metric-value" id="priority-score" style="font-size:32px">00</div>
+                                </div>
+                                <div>
+                                    <div class="mono-label" style="font-size:10px">Mission Reward</div>
+                                    <div id="reward-points" style="color:var(--preview-pink); font-family:var(--font-mono); font-weight:700; font-size:20px">+0 XP</div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="bento-card span-3">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
-                                <div class="mono-label">Recommended Squad Loadout (AI Inferred)</div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+                                <div class="mono-label">Squad Loadout & Quotas</div>
                                 <div class="score-pill ready" style="font-size:10px">Inventory Sync: Active</div>
                             </div>
-                            <div id="loadout-list" style="display:flex; flex-wrap:wrap; gap:12px">
+                            <div id="loadout-list" class="loadout-grid">
                                 <!-- Loadout items injected -->
-                                <p class="body-small">Analyzing equipment requirements...</p>
                             </div>
                         </div>
 
-                        <div class="bento-card">
-                            <div class="mono-label">Reserve Pool</div>
-                            <div id="reserve-list" class="unit-list">
-                                <!-- Reserves injected -->
+                        <div class="bento-card span-3">
+                            <div class="mono-label" style="margin-bottom:12px">Unit Allocation (Active Battalion)</div>
+                            <div id="squad-list" class="unit-list">
+                                <!-- Squad cards injected -->
                             </div>
                         </div>
                     </div>
@@ -313,7 +313,7 @@
                         </div>
                         <div class="bento-card">
                             <div class="mono-label">Active Deployments</div>
-                            <div class="metric-value" id="inv-active">14</div>
+                            <div class="metric-value" id="inv-active">0</div>
                         </div>
                     </div>
 
@@ -328,6 +328,7 @@
                                         <th>Asset Name</th>
                                         <th>Category</th>
                                         <th>Stock</th>
+                                        <th>In Use</th>
                                         <th>Condition</th>
                                         <th>Location</th>
                                         <th>Action</th>
@@ -380,15 +381,18 @@
                 </div>
 
                 <!-- PERSONNEL DATABASE -->
-                <div id="roster-view" class="view roster-view hidden">
-                    <div class="roster-header">
+                <div id="roster-view" class="view hidden">
+                    <div style="display:flex; justify-content:space-between; align-items:end; margin-bottom:24px">
                         <div>
-                            <h2>Personnel</h2>
-                            <p class="body-small">Operational status & hierarchy</p>
+                            <div class="mono-label" style="margin-bottom:4px">Personnel Database</div>
+                            <h2>Active Duty Specialists</h2>
                         </div>
-                        <div class="search-box">
-                            <i data-lucide="search"></i>
-                            <input type="text" id="roster-search" placeholder="Search infrastructure...">
+                        <div style="display:flex; gap:12px">
+                            <button id="reset-energy-btn" class="suggestion-btn" style="background:var(--ship-red); color:white; border:none">REST ALL UNITS</button>
+                            <div class="search-box">
+                                <i data-lucide="search" style="width:16px; opacity:0.5"></i>
+                                <input type="text" id="roster-search" placeholder="Search by name or skill...">
+                            </div>
                         </div>
                     </div>
                     
@@ -411,11 +415,33 @@
         </main>
     </div>
 
-    <!-- PROFILE MODAL -->
-    <div id="profile-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <button class="modal-close" id="close-modal"><i data-lucide="x"></i></button>
-            <div id="modal-body"></div>
+    <!-- ASSET MODAL -->
+    <div id="asset-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 400px">
+            <h2 style="margin-bottom:8px">Register New Asset</h2>
+            <p class="body-small" style="margin-bottom:24px; color:var(--ds-gray-500)">Update the global logistics ledger.</p>
+            
+            <div style="display:flex; flex-direction:column; gap:16px">
+                <div class="input-group">
+                    <div class="mono-label" style="font-size:10px; margin-bottom:4px">Asset Name</div>
+                    <input type="text" id="new-asset-name" class="custom-input" placeholder="e.g. Bio-Hazard Filters">
+                </div>
+                <div class="input-group">
+                    <div class="mono-label" style="font-size:10px; margin-bottom:4px">Category</div>
+                    <select id="new-asset-category" class="custom-input">
+                        <option value="Logistics">Logistics</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Safety">Safety</option>
+                        <option value="Communications">Communications</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <div class="mono-label" style="font-size:10px; margin-bottom:4px">Initial Stock Qty</div>
+                    <input type="number" id="new-asset-qty" class="custom-input" placeholder="0">
+                </div>
+                <button id="save-asset-btn" class="suggestion-btn" style="background:var(--ds-gray-900); color:white; margin-top:8px">SYNC TO WAREHOUSE</button>
+            </div>
+            <button class="modal-close" onclick="document.getElementById('asset-modal').classList.add('hidden')"><i data-lucide="x"></i></button>
         </div>
     </div>
 

@@ -4,24 +4,54 @@ from src.core.scorer import calculate_score
 from src.core.gamifier import calculate_reward_points, load_stats, get_level_info
 
 def assemble_squad(priority, volunteers, category, people_count):
-    # Dynamically scale squad size based on priority
-    if priority > 90: target_size = 12
-    elif priority > 70: target_size = 8
-    elif priority > 40: target_size = 5
-    else: target_size = 3
+    """
+    Properly scales team size and composition based on people_affected.
+    Ratio: ~1 Specialist per 2 affected people for Critical, 1 per 5 for Medium.
+    """
+    # 1. Determine Manpower Requirements
+    if priority >= 100: ratio = 1.0 # 1-to-1 response for absolute criticals
+    elif priority > 80: ratio = 2.0
+    elif priority > 60: ratio = 4.0
+    else: ratio = 8.0
+    
+    required_count = max(4, round(people_count / ratio))
+    
+    # Cap squad size at 48 for mass disasters (split across teams)
+    required_count = min(48, required_count)
     
     squad = sorted(volunteers, key=lambda x: x.get('match_score', 0), reverse=True)
-    final_pool = squad[:target_size]
+    final_pool = squad[:required_count]
     
-    # We now show a larger portion of the match pool
-    limit = max(3, len(final_pool)) 
+    # 2. Assign Team Tiers based on scale
+    if required_count >= 12:
+        tier = "REGIMENT"
+        # Split into 4 specialized teams
+        chunk = required_count // 4
+        return {
+            "is_split": True, 
+            "tier": tier, 
+            "required_manpower": required_count,
+            "team_alpha": final_pool[:chunk], # Extraction/Breach
+            "team_beta": final_pool[chunk:chunk*2], # Medical/Safety
+            "team_gamma": final_pool[chunk*2:chunk*3], # Logistics/Supply
+            "team_delta": final_pool[chunk*3:] # Perimeter/Support
+        }
+    elif required_count >= 6:
+        tier = "STRIKE FORCE"
+        return {
+            "is_split": True, 
+            "tier": tier, 
+            "required_manpower": required_count,
+            "team_alpha": final_pool[:round(required_count/2)], 
+            "team_beta": final_pool[round(required_count/2):]
+        }
     
-    if people_count > 40:
-        return {"is_split": True, "tier": "REGIMENT", "team_alpha": final_pool[:4], "team_beta": final_pool[4:8], "team_gamma": final_pool[8:]}
-    elif people_count > 10:
-        return {"is_split": True, "tier": "STRIKE FORCE", "team_alpha": final_pool[:4], "team_beta": final_pool[4:]}
-    
-    return final_pool[:limit]
+    return {
+        "is_split": False,
+        "tier": "RESCUE CELL",
+        "required_manpower": required_count,
+        "team_alpha": final_pool
+    }
 
 def process_new_task(task_data, all_volunteers, tone="Professional", temperature=0.1):
     desc = task_data['description']
@@ -77,3 +107,5 @@ def process_new_task(task_data, all_volunteers, tone="Professional", temperature
         "potential_reward_points": potential_points,
         "ai_reasoning": {"understood": explanation, "action": "Units Deployed.", "raw_thinking": raw_thinking}
     }
+
+

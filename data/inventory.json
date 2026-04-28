@@ -7,44 +7,179 @@
     },
     "categories": {
         "Medical & Healthcare": {
-            "First Aid Kits (Professional)": {"qty": 45, "unit": "kits", "condition": "New", "location": "Medical Bay A1"},
-            "N95 Respirators (3M)": {"qty": 1200, "unit": "units", "condition": "Sealed", "location": "Medical Bay A2"},
-            "Portable Oxygen Concentrators": {"qty": 8, "unit": "units", "condition": "Operational", "location": "Medical Bay A1"},
-            "Latex Gloves (Boxes)": {"qty": 250, "unit": "boxes", "condition": "New", "location": "Medical Bay A3"},
-            "Antiseptic Solution (500ml)": {"qty": 85, "unit": "bottles", "condition": "Good", "location": "Medical Bay A3"}
+            "First Aid Kits (Professional)": {
+                "qty": 45,
+                "unit": "kits",
+                "condition": "New",
+                "location": "Medical Bay A1"
+            },
+            "N95 Respirators (3M)": {
+                "qty": 1200,
+                "unit": "units",
+                "condition": "Sealed",
+                "location": "Medical Bay A2"
+            },
+            "Portable Oxygen Concentrators": {
+                "qty": 8,
+                "unit": "units",
+                "condition": "Operational",
+                "location": "Medical Bay A1"
+            },
+            "Latex Gloves (Boxes)": {
+                "qty": 250,
+                "unit": "boxes",
+                "condition": "New",
+                "location": "Medical Bay A3"
+            },
+            "Antiseptic Solution (500ml)": {
+                "qty": 85,
+                "unit": "bottles",
+                "condition": "Good",
+                "location": "Medical Bay A3"
+            }
         },
         "Rescue & Tactical": {
-            "Heavy Duty Rope (50m)": {"qty": 14, "unit": "coils", "condition": "Operational", "location": "Rescue Rack B1"},
-            "Tactical Flashlights (High-Lumen)": {"qty": 65, "unit": "units", "condition": "Operational", "location": "Rescue Rack B2"},
-            "Hydraulic Spreader (Jaws of Life)": {"qty": 3, "unit": "units", "condition": "Pristine", "location": "Heavy Equipment Zone"},
-            "Plasma Cutting Torch": {"qty": 2, "unit": "units", "condition": "Operational", "location": "Heavy Equipment Zone"},
-            "Hazmat Suits (Level A)": {"qty": 12, "unit": "suits", "condition": "Certified", "location": "Sealed Vault S1"}
+            "Heavy Duty Rope (50m)": {
+                "qty": 14,
+                "unit": "coils",
+                "condition": "Operational",
+                "location": "Rescue Rack B1"
+            },
+            "Tactical Flashlights (High-Lumen)": {
+                "qty": 65,
+                "unit": "units",
+                "condition": "Operational",
+                "location": "Rescue Rack B2"
+            },
+            "Hydraulic Spreader (Jaws of Life)": {
+                "qty": 3,
+                "unit": "units",
+                "condition": "Pristine",
+                "location": "Heavy Equipment Zone"
+            },
+            "Plasma Cutting Torch": {
+                "qty": 2,
+                "unit": "units",
+                "condition": "Operational",
+                "location": "Heavy Equipment Zone"
+            },
+            "Hazmat Suits (Level A)": {
+                "qty": 12,
+                "unit": "suits",
+                "condition": "Certified",
+                "location": "Sealed Vault S1"
+            }
         },
         "Food & Water": {
-            "Water Bottles (1L Case)": {"qty": 400, "unit": "cases", "condition": "Fresh", "location": "Sustenance Bay C1"},
-            "MRE Rations (Vegetarian)": {"qty": 1500, "unit": "packs", "condition": "Fresh", "location": "Sustenance Bay C2"},
-            "MRE Rations (High Protein)": {"qty": 800, "unit": "packs", "condition": "Fresh", "location": "Sustenance Bay C2"},
-            "Portable Water Filters": {"qty": 120, "unit": "units", "condition": "New", "location": "Sustenance Bay C1"}
+            "Water Bottles (1L Case)": {
+                "qty": 400,
+                "unit": "cases",
+                "condition": "Fresh",
+                "location": "Sustenance Bay C1"
+            },
+            "MRE Rations (Vegetarian)": {
+                "qty": 1500,
+                "unit": "packs",
+                "condition": "Fresh",
+                "location": "Sustenance Bay C2"
+            },
+            "MRE Rations (High Protein)": {
+                "qty": 800,
+                "unit": "packs",
+                "condition": "Fresh",
+                "location": "Sustenance Bay C2"
+            },
+            "Portable Water Filters": {
+                "qty": 120,
+                "unit": "units",
+                "condition": "New",
+                "location": "Sustenance Bay C1"
+            }
         },
         "Logistics & Power": {
-            "Solar Power Banks (20000mAh)": {"qty": 42, "unit": "units", "condition": "Charged", "location": "Electronics Bin D1"},
-            "Digital Two-Way Radios": {"qty": 30, "unit": "units", "condition": "Operational", "location": "Electronics Bin D1"},
-            "Satellite Phone (Iridium)": {"qty": 4, "unit": "units", "condition": "Active", "location": "Secure Comms Box"},
-            "Honda Portable Generator (2kW)": {"qty": 6, "unit": "units", "condition": "Operational", "location": "Generator Yard"}
+            "Solar Power Banks (20000mAh)": {
+                "qty": 42,
+                "unit": "units",
+                "condition": "Charged",
+                "location": "Electronics Bin D1"
+            },
+            "Digital Two-Way Radios": {
+                "qty": 30,
+                "unit": "units",
+                "condition": "Operational",
+                "location": "Electronics Bin D1"
+            },
+            "Satellite Phone (Iridium)": {
+                "qty": 4,
+                "unit": "units",
+                "condition": "Active",
+                "location": "Secure Comms Box"
+            },
+            "Honda Portable Generator (2kW)": {
+                "qty": 6,
+                "unit": "units",
+                "condition": "Operational",
+                "location": "Generator Yard"
+            }
         },
         "Shelter & Comfort": {
-            "Emergency Thermal Blankets": {"qty": 2000, "unit": "units", "condition": "New", "location": "Textile Bin E1"},
-            "Winter Tents (6-Person)": {"qty": 50, "unit": "tents", "condition": "Good", "location": "Textile Bin E2"},
-            "Inflatable Sleeping Mats": {"qty": 180, "unit": "units", "condition": "Operational", "location": "Textile Bin E2"}
+            "Emergency Thermal Blankets": {
+                "qty": 2000,
+                "unit": "units",
+                "condition": "New",
+                "location": "Textile Bin E1"
+            },
+            "Winter Tents (6-Person)": {
+                "qty": 50,
+                "unit": "tents",
+                "condition": "Good",
+                "location": "Textile Bin E2"
+            },
+            "Inflatable Sleeping Mats": {
+                "qty": 180,
+                "unit": "units",
+                "condition": "Operational",
+                "location": "Textile Bin E2"
+            }
+        },
+        "Medical": {
+            "syringe": {
+                "qty": 10,
+                "price": 0
+            },
+            "oxygen masks": {
+                "qty": 30,
+                "price": 0
+            },
+            "gloves": {
+                "qty": 20,
+                "price": 0
+            }
+        },
+        "Communications": {
+            "high-end satellite radios": {
+                "qty": 20,
+                "price": 0
+            }
         }
     },
     "mission_specific_kits": {
         "Flood Recovery Kit": {
-            "items": ["Water Filter x1", "Flashlight x1", "Rope x1", "MRE x10"],
+            "items": [
+                "Water Filter x1",
+                "Flashlight x1",
+                "Rope x1",
+                "MRE x10"
+            ],
             "weight": "12kg"
         },
         "Medical Triage Kit": {
-            "items": ["First Aid Kit x2", "Oxygen Concentrator x1", "Gloves x5", "Antiseptic x2"],
+            "items": [
+                "First Aid Kit x2",
+                "Oxygen Concentrator x1",
+                "Gloves x5",
+                "Antiseptic x2"
+            ],
             "weight": "18kg"
         }
     }

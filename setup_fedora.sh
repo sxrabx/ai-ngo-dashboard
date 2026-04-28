@@ -26,7 +26,7 @@ mkdir -p src/data
 
 echo "================================================="
 echo "Setup Complete!"
-echo "To activate the environment and run the dashboard, use:"
+echo "To activate the environment and run the system, use:"
 echo "source venv_linux/bin/activate"
-echo "streamlit run src/api/dashboard.py"
+echo "node launch.js"
 echo "================================================="

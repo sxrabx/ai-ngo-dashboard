@@ -1,9 +1,7 @@
 fastapi
 uvicorn
-streamlit
 pydantic
 pydantic-settings
-pandas
 crewai
 langchain-openai
 litellm
@@ -11,7 +9,4 @@ chromadb
 sentence-transformers
 python-dotenv
 requests
-folium
-streamlit-folium
-plotly
 PyPDF2

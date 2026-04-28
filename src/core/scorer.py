@@ -11,8 +11,14 @@ def calculate_score(urgency, people_affected):
     score = base_scores.get(norm_urgency, 10)
     
     # Impact Factor: Add points based on people affected
-    # Reverted logic: +2 points per person, capped at +30 bonus
-    impact_bonus = min(30, people_affected * 2)
+    # Aggressive scaling: +5 points per 10 people, plus 1 point per person for smaller groups
+    if people_affected > 100:
+        impact_bonus = 60 # Massive impact
+    elif people_affected > 50:
+        impact_bonus = 40
+    else:
+        impact_bonus = people_affected * 1.5
+        
     score += impact_bonus
     
-    return min(score, 100) # Strictly capped at 100
+    return min(100, int(score)) # Strictly capped at 100

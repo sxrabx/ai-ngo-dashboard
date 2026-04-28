@@ -20,7 +20,7 @@ logging.basicConfig(
 NVIDIA_API_KEY = settings.NVIDIA_API_KEY
 NVIDIA_API_URL = settings.NVIDIA_API_URL
 
-# Global cache for the current session to prevent double API calls by Streamlit
+# Global cache for the current session to prevent duplicate API calls
 _llm_cache = {}
 
 def call_llm(description, temperature=0.1, tone="Professional"):
@@ -38,8 +38,13 @@ def call_llm(description, temperature=0.1, tone="Professional"):
     3. "thought_process": Your internal reasoning.
     4. "category": ["Health", "Relief", "Logistics", "Safety", "Mental Health", "Environment", "Admin", "Education", "General"]
     5. "urgency": ["Critical", "High", "Medium", "Low"]
-    6. "people_count": Integer.
+    6. "people_count": Integer. IMPORTANT: Sum ALL individuals mentioned as needing help, trapped, or responsive. If multiple zones are mentioned, sum them.
     7. "understood_reasoning": A 2-3 sentence explanation as the AI Coordinator.
+    
+    EXTRACTION RULES:
+    - If a report says "20 contractors, 13 made it out," the people_count is 7 (the ones trapped).
+    - If a report mentions 100 in Zone A and 50 in Zone B, the people_count is 150.
+    - If a report says "300 civilians safe but need water," they STILL COUNT towards people_count because they require logistics.
     
     TONE REQUIREMENT: Use a {tone} tone in the 'understood_reasoning' and 'thought_process'.
     
@@ -63,6 +68,10 @@ def call_llm(description, temperature=0.1, tone="Professional"):
         if json_match:
             content = json_match.group(0)
             
+        # Clean up common LLM JSON mistakes (like trailing commas)
+        content = re.sub(r',\s*\}', '}', content)
+        content = re.sub(r',\s*\]', ']', content)
+        
         return json.loads(content)
     except Exception as e:
         # Log error to file
