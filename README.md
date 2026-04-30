@@ -96,6 +96,11 @@ node launch.js
 
 ---
 
+## 📄 License
+This project is licensed under the ISC License (as declared in package.json). The frontend package is marked private with no explicit license file — treat all code as proprietary unless otherwise stated by the repository owner.
+
+---
+
 <p align="center">
   Developed for <strong>Mission-Critical Community Response</strong>.
 </p>
