@@ -6,6 +6,10 @@
 ### _Autonomous Mission Intelligence for Disaster Response & Volunteer Triage_
 
 [![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![NVIDIA NIM](https://img.shields.io/badge/NVIDIA_NIM-Llama_3.1_405B-76B900?style=for-the-badge&logo=nvidia&logoColor=white)](https://build.nvidia.com)
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector%20Search-FF6F00?style=for-the-badge)](https://www.trychroma.com/)
