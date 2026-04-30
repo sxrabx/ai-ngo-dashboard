@@ -44,9 +44,50 @@ class InventoryService:
         
         return stats
 
+    def _normalize(self, text):
+        t = text.lower().strip()
+        clean_text = t.replace('(', ' ').replace(')', ' ').replace('-', ' ').replace('_', ' ')
+        words = clean_text.split()
+        normalized_words = []
+        for w in words:
+            if len(w) > 3 and w.endswith('s'):
+                normalized_words.append(w[:-1])
+            else:
+                normalized_words.append(w)
+        return set(normalized_words), t
+
+    def _check_match(self, target_norm, target_words, key):
+        key_words, key_norm = self._normalize(key)
+        
+        # 1. Direct contains
+        if target_norm in key_norm or key_norm in target_norm:
+            return True
+            
+        # 2. Word overlap
+        common = target_words.intersection(key_words)
+        if len(common) >= 1 and any(len(w) > 3 for w in common):
+            return True
+        elif len(common) >= 2:
+            return True
+            
+        # 3. Heuristic for critical equipment
+        critical_terms = {"oxygen", "n95", "respirator", "medical", "aid", "rope", "water", "gloves"}
+        if any(w in critical_terms for w in target_words) and any(w in critical_terms for w in key_words):
+            if target_words.intersection(key_words).intersection(critical_terms):
+                return True
+        return False
+
+    def _apply_deduction(self, val, key, qty, log):
+        if isinstance(val, dict) and "qty" in val:
+            val["qty"] = max(0, val["qty"] - qty)
+            val["deployed"] = val.get("deployed", 0) + qty
+            log.append(f"{qty}x {key}")
+            print(f"✅ LOGISTICS: Deducted {qty}x {key}. New Total Deployed: {val['deployed']}")
+        return True
+
     def deduct_items(self, items_to_deduct):
         """
-        Deducts specific quantities from inventory.json.
+        Deducts items from stock and adds to 'deployed' count.
         items_to_deduct: List of strings OR list of dicts with {'name', 'qty'}
         """
         data = self._load_data()
@@ -54,42 +95,34 @@ class InventoryService:
         deducted_log = []
 
         for item in items_to_deduct:
-            # Handle both simple list and list of dicts
             name = item['name'] if isinstance(item, dict) else item
             qty_to_sub = item['qty'] if isinstance(item, dict) else 1
             
-            # Normalize name for matching
-            search_name = name.lower().strip()
-            if search_name.endswith('s'): search_name = search_name[:-1]
-            name_words = set(search_name.replace('(', '').replace(')', '').split())
+            target_words, target_norm = self._normalize(name)
             
             found = False
+            # Deep-search all categories and subcategories
             for cat, items in categories.items():
-                for key, val in items.items():
-                    norm_key = key.lower()
-                    key_words = set(norm_key.replace('(', '').replace(')', '').split())
-                    
-                    # Robust matching logic
-                    is_match = (search_name in norm_key or norm_key in search_name)
-                    if not is_match:
-                        # Check keyword overlap (at least one word > 3 chars matches)
-                        common = name_words.intersection(key_words)
-                        if len(common) >= 1 and any(len(w) > 3 for w in common):
-                            is_match = True
-
-                    if is_match:
-                        if isinstance(val, dict) and "qty" in val:
-                            val["qty"] = max(0, val["qty"] - qty_to_sub)
-                            val["deployed"] = val.get("deployed", 0) + qty_to_sub
-                            deducted_log.append(f"{qty_to_sub}x {key}")
-                            found = True
-                            break
-                        elif isinstance(val, int):
-                            items[key] = {"qty": max(0, val - qty_to_sub), "deployed": qty_to_sub}
-                            deducted_log.append(f"{qty_to_sub}x {key}")
-                            found = True
-                            break
                 if found: break
+                
+                for key, val in items.items():
+                    # Check if val is a nested category itself
+                    if isinstance(val, dict) and not any(k in val for k in ["qty", "stock", "stock_count"]):
+                        # It's a subcategory, search inside it
+                        for sub_key, sub_val in val.items():
+                            if self._check_match(target_norm, target_words, sub_key):
+                                self._apply_deduction(sub_val, sub_key, qty_to_sub, deducted_log)
+                                found = True
+                                break
+                    else:
+                        # It's a direct item
+                        if self._check_match(target_norm, target_words, key):
+                            self._apply_deduction(val, key, qty_to_sub, deducted_log)
+                            found = True
+                            break
+            
+            if not found:
+                print(f"⚠️ LOGISTICS WARNING: Could not find match for '{name}' in any category.")
         
         with open(self.inventory_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4)

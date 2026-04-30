@@ -401,51 +401,59 @@
         "energy": 100
     },
     "V-102": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 934,
+        "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 4,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-103": {
+        "total_points": 1054,
+        "tasks_completed": 6,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 5,
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V-104": {
         "total_points": 709,
         "tasks_completed": 4,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
-        },
-        "energy": 100
-    },
-    "V-104": {
-        "total_points": 484,
-        "tasks_completed": 3,
-        "badges": [],
-        "categories": {
-            "Health": 3
+            "Health": 3,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-105": {
-        "total_points": 484,
-        "tasks_completed": 3,
-        "badges": [],
+        "total_points": 709,
+        "tasks_completed": 4,
+        "badges": [
+            "Veteran"
+        ],
         "categories": {
-            "Health": 3
+            "Health": 3,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-107": {
-        "total_points": 34,
-        "tasks_completed": 1,
+        "total_points": 119,
+        "tasks_completed": 2,
         "badges": [],
         "categories": {
-            "Health": 1
+            "Health": 2
         },
         "energy": 100
     },
@@ -461,67 +469,74 @@
         "energy": 100
     },
     "V-109": {
-        "total_points": 484,
-        "tasks_completed": 3,
-        "badges": [],
+        "total_points": 659,
+        "tasks_completed": 4,
+        "badges": [
+            "Veteran"
+        ],
         "categories": {
-            "Health": 3
+            "Health": 3,
+            "Safety": 1
         },
         "energy": 100
     },
     "V-110": {
-        "total_points": 634,
+        "total_points": 1214,
+        "tasks_completed": 10,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 7,
+            "Safety": 2,
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V-111": {
+        "total_points": 1214,
+        "tasks_completed": 10,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 10
+        },
+        "energy": 100
+    },
+    "V-112": {
+        "total_points": 934,
         "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
             "Health": 4,
-            "Safety": 1
-        },
-        "energy": 100
-    },
-    "V-111": {
-        "total_points": 709,
-        "tasks_completed": 4,
-        "badges": [
-            "Veteran"
-        ],
-        "categories": {
-            "Health": 4
-        },
-        "energy": 100
-    },
-    "V-112": {
-        "total_points": 709,
-        "tasks_completed": 4,
-        "badges": [
-            "Veteran"
-        ],
-        "categories": {
-            "Health": 4
+            "Relief": 1
         },
         "energy": 100
     },
     "V-113": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 934,
+        "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 4,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-114": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 934,
+        "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 4,
+            "Relief": 1
         },
         "energy": 100
     },
@@ -544,13 +559,14 @@
         "energy": 100
     },
     "V-117": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 1234,
+        "tasks_completed": 9,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 8,
+            "Relief": 1
         },
         "energy": 100
     },
@@ -566,13 +582,15 @@
         "energy": 100
     },
     "V-119": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 1064,
+        "tasks_completed": 6,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 4,
+            "Relief": 1,
+            "Safety": 1
         },
         "energy": 100
     },
@@ -586,42 +604,49 @@
         "energy": 100
     },
     "V-121": {
-        "total_points": 34,
-        "tasks_completed": 1,
+        "total_points": 259,
+        "tasks_completed": 2,
         "badges": [],
         "categories": {
-            "Health": 1
+            "Health": 1,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-122": {
-        "total_points": 484,
-        "tasks_completed": 3,
-        "badges": [],
+        "total_points": 709,
+        "tasks_completed": 4,
+        "badges": [
+            "Veteran"
+        ],
         "categories": {
-            "Health": 3
+            "Health": 3,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-123": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 934,
+        "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 4,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-124": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 1109,
+        "tasks_completed": 6,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 4,
+            "Relief": 1,
+            "Safety": 1
         },
         "energy": 100
     },
@@ -646,11 +671,12 @@
         "energy": 100
     },
     "V-127": {
-        "total_points": 34,
-        "tasks_completed": 1,
+        "total_points": 259,
+        "tasks_completed": 2,
         "badges": [],
         "categories": {
-            "Health": 1
+            "Health": 1,
+            "Relief": 1
         },
         "energy": 100
     },
@@ -666,51 +692,61 @@
         "energy": 100
     },
     "V-129": {
-        "total_points": 34,
-        "tasks_completed": 1,
-        "badges": [],
-        "categories": {
-            "Health": 1
-        },
-        "energy": 100
-    },
-    "V-130": {
         "total_points": 259,
         "tasks_completed": 2,
         "badges": [],
         "categories": {
-            "Health": 2
+            "Health": 1,
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V-130": {
+        "total_points": 779,
+        "tasks_completed": 5,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 3,
+            "Relief": 1,
+            "Safety": 1
         },
         "energy": 100
     },
     "V-131": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 934,
+        "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 4,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-132": {
-        "total_points": 484,
-        "tasks_completed": 3,
-        "badges": [],
-        "categories": {
-            "Health": 3
-        },
-        "energy": 100
-    },
-    "V-133": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 884,
+        "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 3,
+            "Relief": 1,
+            "Safety": 1
+        },
+        "energy": 100
+    },
+    "V-133": {
+        "total_points": 784,
+        "tasks_completed": 5,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 5
         },
         "energy": 100
     },
@@ -724,91 +760,100 @@
         "energy": 100
     },
     "V-135": {
-        "total_points": 784,
-        "tasks_completed": 5,
+        "total_points": 1364,
+        "tasks_completed": 10,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 5
-        },
-        "energy": 100
-    },
-    "V-136": {
-        "total_points": 784,
-        "tasks_completed": 5,
-        "badges": [
-            "Veteran"
-        ],
-        "categories": {
-            "Health": 4,
+            "Health": 8,
+            "Relief": 1,
             "Safety": 1
         },
         "energy": 100
     },
+    "V-136": {
+        "total_points": 1129,
+        "tasks_completed": 7,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 5,
+            "Safety": 1,
+            "Relief": 1
+        },
+        "energy": 100
+    },
     "V-137": {
-        "total_points": 559,
-        "tasks_completed": 4,
+        "total_points": 959,
+        "tasks_completed": 6,
         "badges": [
             "Veteran"
         ],
         "categories": {
             "Health": 3,
-            "Safety": 1
+            "Safety": 2,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-138": {
-        "total_points": 784,
+        "total_points": 1009,
+        "tasks_completed": 6,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 4,
+            "Safety": 1,
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V-139": {
+        "total_points": 1234,
+        "tasks_completed": 9,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 8,
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V-140": {
+        "total_points": 934,
         "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
             "Health": 4,
-            "Safety": 1
-        },
-        "energy": 100
-    },
-    "V-139": {
-        "total_points": 784,
-        "tasks_completed": 5,
-        "badges": [
-            "Veteran"
-        ],
-        "categories": {
-            "Health": 5
-        },
-        "energy": 100
-    },
-    "V-140": {
-        "total_points": 709,
-        "tasks_completed": 4,
-        "badges": [
-            "Veteran"
-        ],
-        "categories": {
-            "Health": 4
+            "Relief": 1
         },
         "energy": 100
     },
     "V-141": {
-        "total_points": 559,
-        "tasks_completed": 4,
+        "total_points": 884,
+        "tasks_completed": 7,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 6,
+            "Safety": 1
         },
         "energy": 100
     },
     "V-142": {
-        "total_points": 34,
-        "tasks_completed": 1,
+        "total_points": 259,
+        "tasks_completed": 2,
         "badges": [],
         "categories": {
-            "Health": 1
+            "Health": 1,
+            "Relief": 1
         },
         "energy": 100
     },
@@ -822,11 +867,12 @@
         "energy": 100
     },
     "V-144": {
-        "total_points": 34,
-        "tasks_completed": 1,
+        "total_points": 259,
+        "tasks_completed": 2,
         "badges": [],
         "categories": {
-            "Health": 1
+            "Health": 1,
+            "Relief": 1
         },
         "energy": 100
     },
@@ -840,55 +886,60 @@
         "energy": 100
     },
     "V-146": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 934,
+        "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 4,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-147": {
-        "total_points": 709,
-        "tasks_completed": 4,
+        "total_points": 884,
+        "tasks_completed": 5,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
+            "Health": 4,
+            "Safety": 1
         },
         "energy": 100
     },
     "V-148": {
-        "total_points": 709,
+        "total_points": 934,
+        "tasks_completed": 5,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 4,
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V-149": {
+        "total_points": 259,
+        "tasks_completed": 2,
+        "badges": [],
+        "categories": {
+            "Health": 1,
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V-159": {
+        "total_points": 900,
         "tasks_completed": 4,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 4
-        },
-        "energy": 100
-    },
-    "V-149": {
-        "total_points": 34,
-        "tasks_completed": 1,
-        "badges": [],
-        "categories": {
-            "Health": 1
-        },
-        "energy": 100
-    },
-    "V-159": {
-        "total_points": 675,
-        "tasks_completed": 3,
-        "badges": [
-            "Veteran"
-        ],
-        "categories": {
-            "Health": 3
+            "Health": 3,
+            "Relief": 1
         },
         "energy": 100
     },
@@ -902,55 +953,81 @@
         "energy": 100
     },
     "V-151": {
-        "total_points": 675,
-        "tasks_completed": 3,
+        "total_points": 1150,
+        "tasks_completed": 6,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 3
+            "Health": 4,
+            "Relief": 1,
+            "Safety": 1
         },
         "energy": 100
     },
     "V-153": {
-        "total_points": 450,
-        "tasks_completed": 2,
-        "badges": [],
+        "total_points": 675,
+        "tasks_completed": 3,
+        "badges": [
+            "Veteran"
+        ],
         "categories": {
-            "Health": 2
+            "Health": 2,
+            "Relief": 1
         },
         "energy": 100
     },
     "V-156": {
-        "total_points": 675,
-        "tasks_completed": 3,
+        "total_points": 1105,
+        "tasks_completed": 8,
         "badges": [
             "Veteran"
         ],
         "categories": {
-            "Health": 3
+            "Health": 8
         },
         "energy": 100
     },
     "V-152": {
-        "total_points": 675,
-        "tasks_completed": 3,
+        "total_points": 1150,
+        "tasks_completed": 6,
         "badges": [
             "Veteran"
         ],
+        "categories": {
+            "Health": 4,
+            "Relief": 1,
+            "Safety": 1
+        },
+        "energy": 100
+    },
+    "V-158": {
+        "total_points": 900,
+        "tasks_completed": 4,
+        "badges": [
+            "Veteran"
+        ],
+        "categories": {
+            "Health": 3,
+            "Relief": 1
+        },
+        "energy": 100
+    },
+    "V-150": {
+        "total_points": 325,
+        "tasks_completed": 3,
+        "badges": [],
         "categories": {
             "Health": 3
         },
         "energy": 100
     },
-    "V-158": {
-        "total_points": 675,
-        "tasks_completed": 3,
-        "badges": [
-            "Veteran"
-        ],
+    "V-154": {
+        "total_points": 225,
+        "tasks_completed": 1,
+        "badges": [],
         "categories": {
-            "Health": 3
+            "Relief": 1
         },
         "energy": 100
     }

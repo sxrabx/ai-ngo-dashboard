@@ -2,6 +2,7 @@ import os
 import json
 from crewai import Agent, Task, Crew, Process, LLM
 from config.settings import settings
+from src.nlp.utils import safe_json_loads
 
 # Use the API key from our centralized config
 os.environ["OPENAI_API_KEY"] = settings.NVIDIA_API_KEY
@@ -9,7 +10,7 @@ os.environ["OPENAI_API_BASE"] = settings.OPENAI_API_BASE
 
 # Initialize the LLM using the native CrewAI LLM class wrapper for Litellm
 llm = LLM(
-    model="openai/meta/llama-3.1-8b-instruct",
+    model="openai/meta/llama-3.1-405b-instruct",
     base_url=settings.OPENAI_API_BASE,
     api_key=settings.NVIDIA_API_KEY,
     temperature=0.1
@@ -68,14 +69,8 @@ def process_ngo_report(unstructured_report: str, temperature=0.1):
     # Execute the crew
     result = ngo_crew.kickoff()
     
-    # Attempt to parse JSON from raw output
-    try:
-        raw_str = str(result.raw).replace('```json', '').replace('```', '').strip()
-        data = json.loads(raw_str)
-        return data
-    except Exception as e:
-        print("Failed to parse crew output:", e)
-        return {"description": str(result.raw), "people_count": 1}
+    # Use robust JSON parsing utility
+    return safe_json_loads(str(result.raw), fallback={"description": str(result.raw), "people_count": 1})
 
 
 # -------------------------

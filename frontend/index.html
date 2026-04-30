@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NGO AI | Command Center</title>
-    <!-- Geist Font Family -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono.min.css">
+    <!-- Space Grotesk Font Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- Mapping and Visualization -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -61,11 +62,11 @@
                                     </div>
                                     <i data-lucide="check" class="check-icon hidden"></i>
                                 </div>
-                                <div class="dropdown-item" data-model="Gemma 3N 4B">
+                                <div class="dropdown-item" data-model="Llama 3.1 405B">
                                     <div class="model-icon" style="background:#f3f4f6; color:#1a1c23"><i data-lucide="cpu"></i></div>
                                     <div class="item-info">
-                                        <div class="item-name">Gemma 3N 4B</div>
-                                        <div class="item-desc">Efficient edge-ready intelligence</div>
+                                        <div class="item-name">Llama 3.1 405B</div>
+                                        <div class="item-desc">Flagship reasoning for tactical operations</div>
                                     </div>
                                     <i data-lucide="check" class="check-icon hidden"></i>
                                 </div>
@@ -131,8 +132,8 @@
                 <div class="input-controls">
                     <div class="temp-control">
                         <span class="mono-label" style="font-size:10px">Creativity</span>
-                        <input type="range" id="creativity-slider" min="0" max="1" step="0.1" value="0.7">
-                        <span id="temp-val" class="mono-label" style="color:var(--ds-gray-900); min-width:20px">0.7</span>
+                        <input type="range" id="creativity-slider" min="0" max="1" step="0.1" value="0.4">
+                        <span id="temp-val" class="mono-label" style="color:var(--ds-gray-900); min-width:20px">0.4</span>
                     </div>
                 </div>
                 <div class="input-wrapper">
@@ -180,6 +181,7 @@
             <section id="preview-content" class="preview-content">
                 <!-- WELCOME / LOADING -->
                 <div id="welcome-view" class="view welcome-view">
+                    <div class="intelligence-scan"></div>
                     <div class="welcome-container">
                         <h2 style="margin-bottom:12px">Awaiting Intelligence.</h2>
                         <p class="body-small">The autonomous triage pipeline is standing by for tactical coordinates.</p>
@@ -311,15 +313,12 @@
                             <div class="mono-label">Low Stock</div>
                             <div class="metric-value" style="color:var(--energy-40)" id="inv-low">0</div>
                         </div>
-                        <div class="bento-card">
-                            <div class="mono-label">Active Deployments</div>
-                            <div class="metric-value" id="inv-active">0</div>
-                        </div>
                     </div>
 
                     <div class="bento-card" style="padding:0">
-                        <div style="padding:24px; border-bottom:1px solid var(--ds-gray-100)">
+                        <div style="padding:24px; border-bottom:1px solid var(--ds-gray-100); display:flex; justify-content:space-between; align-items:center">
                             <div class="mono-label">Global Stock Ledger</div>
+                            <div class="score-pill ready" style="font-size:10px"><span class="status-dot green pulse" style="width:6px; height:6px"></span> LIVE SYNC ACTIVE</div>
                         </div>
                         <div class="table-container">
                             <table class="roster-table">
@@ -328,7 +327,6 @@
                                         <th>Asset Name</th>
                                         <th>Category</th>
                                         <th>Stock</th>
-                                        <th>In Use</th>
                                         <th>Condition</th>
                                         <th>Location</th>
                                         <th>Action</th>
@@ -442,6 +440,21 @@
                 <button id="save-asset-btn" class="suggestion-btn" style="background:var(--ds-gray-900); color:white; margin-top:8px">SYNC TO WAREHOUSE</button>
             </div>
             <button class="modal-close" onclick="document.getElementById('asset-modal').classList.add('hidden')"><i data-lucide="x"></i></button>
+        </div>
+    </div>
+
+    <!-- LOG TRACE MODAL -->
+    <div id="log-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 800px; background: #0a0a0a; border: 1px solid #333; padding: 32px;">
+            <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px">
+                <div class="mono-label" style="color:#10b981">> SYSTEM_LOG_TRACE</div>
+                <button onclick="document.getElementById('log-modal').classList.add('hidden')" style="color:white; background:transparent; border:none; cursor:pointer">
+                    <i data-lucide="x"></i>
+                </button>
+            </header>
+            <div id="log-content" class="log-terminal" style="font-family: 'Space Grotesk', monospace; color: #ededed; font-size: 13px; max-height: 500px; overflow-y: auto; padding: 16px; background: #000; border-radius: 4px;">
+                <!-- Log content injected via JS -->
+            </div>
         </div>
     </div>
 

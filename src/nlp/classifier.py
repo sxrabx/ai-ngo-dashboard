@@ -3,6 +3,7 @@ import requests
 import re
 from config.settings import settings
 from src.core.offline_engine import offline_intelligence_mode
+from src.nlp.utils import safe_json_loads
 import logging
 import os
 
@@ -19,6 +20,11 @@ logging.basicConfig(
 
 NVIDIA_API_KEY = settings.NVIDIA_API_KEY
 NVIDIA_API_URL = settings.NVIDIA_API_URL
+
+# Safety check for API Key
+if not NVIDIA_API_KEY or "your_key_here" in NVIDIA_API_KEY:
+    logging.error("CRITICAL: NVIDIA_API_KEY is missing or invalid in .env file.")
+    print("WARNING: NVIDIA_API_KEY is missing. System will use Offline Fallback mode.")
 
 # Global cache for the current session to prevent duplicate API calls
 _llm_cache = {}
@@ -52,7 +58,7 @@ def call_llm(description, temperature=0.1, tone="Professional"):
     """
     
     payload = {
-        "model": "google/gemma-3n-e4b-it",
+        "model": "meta/llama-3.1-405b-instruct",
         "messages": [{"role": "user", "content": prompt}],
         "temperature": temperature,
         "max_tokens": 1024
@@ -63,16 +69,8 @@ def call_llm(description, temperature=0.1, tone="Professional"):
         response.raise_for_status()
         content = response.json()['choices'][0]['message']['content']
         
-        # Robust JSON extraction
-        json_match = re.search(r'\{.*\}', content, re.DOTALL)
-        if json_match:
-            content = json_match.group(0)
-            
-        # Clean up common LLM JSON mistakes (like trailing commas)
-        content = re.sub(r',\s*\}', '}', content)
-        content = re.sub(r',\s*\]', ']', content)
-        
-        return json.loads(content)
+        # Use robust JSON parsing utility
+        return safe_json_loads(content, fallback=offline_intelligence_mode(description))
     except Exception as e:
         # Log error to file
         logging.error(f"API failure. Switched to offline mode. Error: {str(e)}")

@@ -53,7 +53,7 @@ def assemble_squad(priority, volunteers, category, people_count):
         "team_alpha": final_pool
     }
 
-def process_new_task(task_data, all_volunteers, tone="Professional", temperature=0.1):
+def process_new_task(task_data, all_volunteers, tone="Professional", temperature=0.4):
     desc = task_data['description']
     intent = get_intent(desc, temperature=temperature, tone=tone)
     conv_res = get_conversational_response(desc, temperature=temperature, tone=tone)

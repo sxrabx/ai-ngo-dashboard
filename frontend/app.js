@@ -150,6 +150,14 @@ function init() {
             updateAnalytics();
         } catch(e) {}
     }, 300000); // 5 minutes
+
+    // Real-time Inventory Pulse (Every 5 seconds when tab is active)
+    setInterval(() => {
+        const invView = document.getElementById('inventory-view');
+        if (invView && !invView.classList.contains('hidden')) {
+            fetchInventory();
+        }
+    }, 5000);
 }
 
 function bindEvents() {
@@ -472,7 +480,7 @@ async function handleSend() {
     const loaderContainer = document.querySelector('.system-loader');
     if (loaderContainer) loaderContainer.classList.remove('hidden');
     
-    updateLoader(10, 'Establishing neural bridge...');
+    smoothProgress(45, 'Establishing neural bridge...', 2000);
     
     try {
         const response = await fetch(`${API_BASE}/process`, {
@@ -485,7 +493,7 @@ async function handleSend() {
         });
         const data = await response.json();
         
-        updateLoader(100, 'Intelligence Synthesized');
+        smoothProgress(100, 'Intelligence Synthesized', 1200);
         
         setTimeout(() => {
             if (data.intent === "QUESTION") {
@@ -523,10 +531,39 @@ function updateLoader(percent, text) {
     const pc = document.getElementById('loader-percent');
     if (fill) fill.style.width = `${percent}%`;
     if (label) label.innerText = text;
-    if (pc) pc.innerText = `${percent}%`;
+    if (pc) pc.innerText = `${Math.floor(percent)}%`;
+}
+
+function smoothProgress(target, text, duration = 1500) {
+    const pcElement = document.getElementById('loader-percent');
+    if (!pcElement) return;
+    
+    const current = { val: parseFloat(pcElement.innerText) || 0 };
+    
+    if (typeof gsap !== 'undefined') {
+        gsap.to(current, {
+            val: target,
+            duration: duration / 1000,
+            ease: "power2.out",
+            onUpdate: () => {
+                updateLoader(current.val, text);
+            }
+        });
+    } else {
+        updateLoader(target, text);
+    }
 }
 
 function revealMissionPlan(data) {
+    // Reset deploy button state for new mission
+    const btn = elements.deployBtn;
+    if (btn) {
+        btn.classList.remove('activated');
+        btn.innerText = "CONFIRM DISPATCH";
+        btn.disabled = false;
+        btn.style.opacity = "1";
+    }
+
     showView('mission');
     updateMissionView(data);
     fetchGearRecommendations(data.ai_reasoning.understood, data.people_count);
@@ -998,10 +1035,11 @@ function startHealthTimer() {
 /* --- INVENTORY MODULE --- */
 async function fetchInventory() {
     try {
-        const res = await fetch(`${API_BASE}/inventory`);
+        const timestamp = Date.now();
+        const res = await fetch(`${API_BASE}/inventory?t=${timestamp}`);
         const data = await res.json();
         
-        const statsRes = await fetch(`${API_BASE}/inventory/stats`);
+        const statsRes = await fetch(`${API_BASE}/inventory/stats?t=${timestamp}`);
         const stats = await statsRes.json();
         
         if (document.getElementById('inv-total')) document.getElementById('inv-total').innerText = stats.total_items;
@@ -1071,7 +1109,6 @@ function renderInventory(categories) {
             <td><b style="color:var(--ds-gray-1000)">${name.replace(/_/g, ' ').toUpperCase()}</b></td>
             <td><span class="mono-label" style="font-size:10px">${cat}</span></td>
             <td><span class="score-pill ${statusClass}">${qty} ${unit}</span></td>
-            <td><span class="mono-label" style="color:var(--preview-pink)">${deployed} ${unit}</span></td>
             <td><span style="opacity:0.8">${condition}</span></td>
             <td><span style="opacity:0.8">${location}</span></td>
             <td><button class="suggestion-btn" style="padding:4px 8px; font-size:10px">Details</button></td>
@@ -1198,3 +1235,53 @@ function renderLoadout(items) {
         list.appendChild(card);
     });
 }
+
+// --- LOG TRACE LOGIC ---
+document.addEventListener('DOMContentLoaded', () => {
+    const showThinkingBtn = document.getElementById('show-thinking-btn');
+    if (showThinkingBtn) {
+        showThinkingBtn.addEventListener('click', () => {
+            if (missionData && missionData.ai_reasoning) {
+                const logModal = document.getElementById('log-modal');
+                const logContent = document.getElementById('log-content');
+                const timestamp = () => new Date().toLocaleTimeString();
+                
+                logContent.innerHTML = `
+                    <div class="log-entry">
+                        <div class="log-header">
+                            <span class="log-timestamp">[${timestamp()}]</span>
+                            <span class="log-tag tag-info">INFO</span>
+                            <span class="log-msg">Neural path activated for Mission Execution</span>
+                        </div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-header">
+                            <span class="log-timestamp">[${timestamp()}]</span>
+                            <span class="log-tag tag-ai">AI_STRATEGY</span>
+                            <span class="log-msg">${missionData.ai_reasoning.understood || 'Briefing synthesized.'}</span>
+                        </div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-header">
+                            <span class="log-timestamp">[${timestamp()}]</span>
+                            <span class="log-tag tag-thinking">RAW_THINKING_TRACE</span>
+                        </div>
+                        <pre class="log-pre">${missionData.ai_reasoning.raw_thinking || 'No raw thinking trace captured.'}</pre>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-header">
+                            <span class="log-timestamp">[${timestamp()}]</span>
+                            <span class="log-tag tag-info">COMPLETE</span>
+                            <span class="log-msg" style="color:#10b981">Strategic path finalized with ${missionData.priority_score || 0} priority index.</span>
+                        </div>
+                    </div>
+                `;
+                
+                logModal.classList.remove('hidden');
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            } else {
+                alert('No active mission intelligence to trace. Please send a report first.');
+            }
+        });
+    }
+});

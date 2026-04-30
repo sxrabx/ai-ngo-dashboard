@@ -184,7 +184,9 @@ def confirm_dispatch(data: DispatchRequest):
         bulk_update_volunteers_after_task(data.squad_ids, data.xp_reward, data.category, energy_cost=cost)
         
         # 2. Update Inventory (Deduct items)
-        deducted_items = inv_service.deduct_items(data.items)
+        # Convert Pydantic models to dicts for the service
+        items_dict_list = [i.model_dump() for i in data.items]
+        deducted_items = inv_service.deduct_items(items_dict_list)
         
         return {
             "status": "Success",
