@@ -1,25 +1,22 @@
-<h1 align="center">
-  <br>
-  🛰️ NGO AI Tactical Command
-  <br>
-</h1>
+<div align="center">
+  <img src="assets/hero_banner.png" alt="NGO.AI Tactical Hero" width="800">
 
-<p align="center">
-  <strong>An elite AI-driven coordination platform for real-time disaster response.</strong>
-</p>
+  # 🛰️ NGO AI Tactical Command
+  **Elite Intelligence Layer for Mission-Critical Disaster Response**
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Model-Llama_3.1_405B-8E75FF?style=for-the-badge&logo=meta&logoColor=white" />
-  <img src="https://img.shields.io/badge/Inference-NVIDIA_NIM-76B900?style=for-the-badge&logo=nvidia&logoColor=white" />
-  <img src="https://img.shields.io/badge/Orchestration-CrewAI-FF9900?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Vector_DB-ChromaDB-orange?style=for-the-badge" />
-</p>
+  [![License: ISC](https://img.shields.io/badge/License-ISC-8E75FF?style=for-the-badge)](LICENSE)
+  [![Python: 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
+  [![FastAPI: Powered](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+  [![Model: Llama 3.1 405B](https://img.shields.io/badge/Model-Llama_3.1_405B-76B900?style=for-the-badge&logo=meta&logoColor=white)](https://build.nvidia.com)
+  [![Engine: CrewAI](https://img.shields.io/badge/Orchestration-CrewAI-FF9900?style=for-the-badge)](https://crewai.com)
+  [![Frontend: Vanilla JS](https://img.shields.io/badge/Frontend-Vanilla_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+</div>
 
 ---
 
-## 📖 Overview
+## 📖 Executive Summary
 
-The **NGO AI Tactical Command System** is a mission-critical platform designed to solve the data-fragmentation crisis in disaster response. By centralizing unstructured field reports, it provides NGO coordinators with a unified "Intelligence Layer" to mobilize resources with surgical precision.
+The **NGO AI Tactical Command System** is a mission-critical "Intelligence Layer" designed to solve the data-fragmentation crisis in disaster response. By centralizing unstructured field reports, it provides NGO coordinators with a unified command interface to mobilize resources with surgical precision.
 
 Built with **Llama-3.1-405B-Instruct** (via NVIDIA NIM) and **CrewAI**, the system transforms chaotic text into prioritized missions, matches the best personnel via semantic search, and tracks every deployment on a high-fidelity tactical map.
 
@@ -88,7 +85,7 @@ node launch.js
 
 ## 🛠️ Tech Stack
 
-- **Model**: Llama-3.1-405B-Instruct (via NVIDIA NIM)
+- **Reasoning**: Llama-3.1-405B-Instruct (via NVIDIA NIM)
 - **Framework**: FastAPI (Python 3.12)
 - **Intelligence**: CrewAI, ChromaDB, Sentence-Transformers
 - **Frontend**: Vanilla JS, CSS3 (Glassmorphism), Leaflet.js, Plotly.js
