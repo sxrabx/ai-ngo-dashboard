@@ -75,23 +75,24 @@ The result is a unified, real-time command dashboard featuring a premium **Vanil
 ## 🏗️ Architecture
 
 ```text
-┌──────────────────────────────────────────────────────────────────────┐
-│                    NGO AI TACTICAL COMMAND SYSTEM                    │
-│                                                                      │
-│  ┌─────────────────────────────┐   ┌──────────────────────────────┐  │
-│  │   Elite Web Dashboard       │   │      FastAPI REST API        │  │
-│  │   (frontend/index.html)     │   │      (src/api/server.py)     │  │
-│  │  • Mission Laboratory       │   │  • Llama-3.1-405B Gateway    │  │
-│  │  • Personnel Database       │◄──►  • Mission Extraction Engine  │  │
-│  │  • Tactical Mapping         │   │  • Inventory Sync Logic      │  │
-│  │  • Real-time Analytics      │   │  • Volunteer Roster Mgmt     │  │
-│  └─────────────┬───────────────┘   └──────────────┬───────────────┘  │
-│                │                                   │                  │
-│                ▼                                   ▼                  │
-│        Visual Interaction Layer            Intelligence Core         │
-│     (Leaflet.js / Plotly.js)        (CrewAI + NVIDIA NIM 405B)       │
-│                                            (ChromaDB + S-BERT)       │
-└──────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────┐
+│                     NGO AI TACTICAL COMMAND SYSTEM                     │
+│                                                                        │
+│   ┌───────────────────────────────┐      ┌─────────────────────────┐   │
+│   │      Elite Web Dashboard      │      │     FastAPI REST API    │   │
+│   │     (frontend/index.html)     │      │   (src/api/server.py)   │   │
+│   │                               │      │                         │   │
+│   │  • Mission Laboratory         │      │  • Llama-3.1-405B NIM   │   │
+│   │  • Personnel Database         │◄────►│  • Extraction Engine    │   │
+│   │  • Tactical Mapping           │      │  • Inventory Sync       │   │
+│   │  • Real-time Analytics        │      │  • Volunteer Roster     │   │
+│   └──────────────┬────────────────┘      └────────────┬────────────┘   │
+│                  │                                    │                │
+│                  ▼                                    ▼                │
+│       Visual Interaction Layer               Intelligence Core         │
+│       (Leaflet.js / Plotly.js)           (CrewAI + NVIDIA NIM 405B)    │
+│                                              (ChromaDB + S-BERT)       │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Intelligence Pipeline
