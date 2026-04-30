@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/hero_banner.png" alt="NGO AI Tactical Command Hero" width="800">
+  <img src="assets/dashboard_light.png" alt="NGO AI Tactical Command Hero" width="800">
 
 # 🛰️ NGO AI Tactical Command System
 
