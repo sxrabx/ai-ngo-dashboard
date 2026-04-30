@@ -1,95 +1,114 @@
 <div align="center">
   <img src="assets/hero_banner.png" alt="NGO.AI Tactical Hero" width="800">
 
-  # 🛰️ NGO AI Tactical Command
-  **Elite Intelligence Layer for Mission-Critical Disaster Response**
+  # 🛰️ NGO AI Tactical Command System
+  **An elite AI-driven coordination platform for real-time disaster response — featuring autonomous mission intelligence, semantic volunteer triage, and high-fidelity tactical mapping.**
 
   [![License: ISC](https://img.shields.io/badge/License-ISC-8E75FF?style=for-the-badge)](LICENSE)
   [![Python: 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
   [![FastAPI: Powered](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
   [![Model: Llama 3.1 405B](https://img.shields.io/badge/Model-Llama_3.1_405B-76B900?style=for-the-badge&logo=meta&logoColor=white)](https://build.nvidia.com)
   [![Engine: CrewAI](https://img.shields.io/badge/Orchestration-CrewAI-FF9900?style=for-the-badge)](https://crewai.com)
-  [![Frontend: Vanilla JS](https://img.shields.io/badge/Frontend-Vanilla_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 </div>
 
 ---
 
-## 📖 Executive Summary
-
-The **NGO AI Tactical Command System** is a mission-critical "Intelligence Layer" designed to solve the data-fragmentation crisis in disaster response. By centralizing unstructured field reports, it provides NGO coordinators with a unified command interface to mobilize resources with surgical precision.
-
-Built with **Llama-3.1-405B-Instruct** (via NVIDIA NIM) and **CrewAI**, the system transforms chaotic text into prioritized missions, matches the best personnel via semantic search, and tracks every deployment on a high-fidelity tactical map.
+## 📖 Table of Contents
+- [Overview](#-overview)
+- [Architecture](#-architecture)
+- [Key Features](#-key-features)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Installation & Setup](#-installation--setup)
+- [Usage Notes](#-usage-notes)
+- [Roadmap](#-roadmap)
+- [License](#-license)
 
 ---
 
-## ✨ Key Pillars
+## 🌟 Overview
+The **NGO AI Tactical Command System** is a production-grade coordination platform designed to modernise disaster response. It centralises fragmented field reports and community needs into a unified "Intelligence Layer," enabling NGO coordinators to mobilize resources with surgical precision.
 
-### 🧠 Agentic Intelligence
-*   **Autonomous Extraction:** Turns raw incident reports into structured data.
-*   **Multi-Agent Pipelines:** Specialized agents for extraction, translation, and triage.
-*   **Semantic Matching:** ChromaDB-powered skill matching that understands context over keywords.
-
-### 🗺️ Tactical Command
-*   **Geospatial Mapping:** Real-time Leaflet.js tracking with animated rescue routes.
-*   **Proximity-First Triage:** Intelligent ranking based on volunteer-to-incident distance.
-*   **Squad Scaling:** Automatic logic for handling large-scale incidents (Team Alpha/Beta).
-
-### 🔋 Sustainability & Logistics
-*   **Burnout Protection:** Real-time fatigue monitoring and automated energy recovery loops.
-*   **Inventory Sync:** Live tracking of "In Use" vs. "Available" equipment.
-*   **Gamified Readiness:** XP-based progression for volunteers to maintain high morale.
+### Why this exists:
+*   **Chaos to Action**: Multi-agent **CrewAI** pipelines powered by **NVIDIA NIM (Llama 3.1 405B)** parse unstructured incident reports and PDFs into structured missions with automated severity ratings and resource requirements.
+*   **Smart Triage**: A local **ChromaDB** vector store replaces naive keyword matching. Personnel are ranked by semantic skill alignment, real-time GPS proximity, and mission readiness (fatigue tracking).
 
 ---
 
 ## 🏗️ Architecture
-
-```mermaid
-graph TD
-    A[Unstructured Data] --> B[Llama-3.1-405B / NVIDIA NIM]
-    B --> C[CrewAI Agents]
-    C --> D{Triage Engine}
-    D --> E[ChromaDB Vector Match]
-    D --> F[Proximity Scorer]
-    E & F --> G[Tactical Frontend]
-    G --> H[Mission Deployment]
+```text
+┌────────────────────────────────────────────────────────────────────┐
+│                    NGO AI COMMAND PLATFORM                         │
+│                                                                    │
+│  ┌─────────────────────────┐    ┌────────────────────────────┐     │
+│  │   Tactical Frontend     │    │     Intelligence Backend   │     │
+│  │      (Vanilla JS)       │    │      (FastAPI + Python)    │     │
+│  │                         │    │                            │     │
+│  │  • Mission Control      │    │  • Llama-3.1-405B (NIM)    │     │
+│  │  • Personnel Roster     │◄───►  • CrewAI Agent Pipelines  │     │
+│  │  • Interactive Maps     │    │  • ChromaDB Vector Search  │     │
+│  │  • Logistics Command    │    │  • Smart Scorer Algorithm  │     │
+│  └─────────────────────────┘    └────────────────────────────┘     │
+│               │                               │                    │
+│               ▼                               ▼                    │
+│     Leaflet Geospatial Map         NVIDIA NIM (Llama-3.1)          │
+│     Plotly Intelligence Gauges    Local Heuristic Fallback Engine  │
+│     JSON Persistence Ledger        Autonomous Agent Framework      │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🚀 Quick Start
+## ✨ Key Features
 
-### 1. Setup Environment
-```bash
-# Clone & Enter
-git clone https://github.com/sxrabx/ai-ngo-dashboard.git
-cd ai-ngo-dashboard
-
-# Install Core
-pip install -r requirements.txt
-
-# Configure Secrets
-echo "NVIDIA_API_KEY=your_key_here" > .env
-```
-
-### 2. Launch Tactical Center
-The system features a custom high-fidelity launcher for orchestrated startup:
-```bash
-node launch.js
-```
-
-*   **Dashboard:** `http://localhost:3000`
-*   **Backend API:** `http://localhost:8000`
-*   **Documentation:** `http://localhost:8000/docs`
+### 🖥️ Tactical Dashboard
+| Module | Description |
+| :--- | :--- |
+| **Mission Control** | Submit raw reports or upload PDFs. AI generates categories, priorities, and squad loadouts automatically. |
+| **Personnel Database** | Real-time roster with energy monitoring (0-100%), XP-based leveling, and availability tracking. |
+| **Impact Radar** | Interactive Leaflet.js map showing missions (red pulse) and volunteer locations (blue markers) by sector. |
+| **Logistics Command** | Integrated warehouse management tracking "In Use" vs "Available" assets across all deployments. |
+| **System Health** | Live telemetry for API gateway, uptime, and active AI mode (Cloud vs Offline Fallback). |
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Reasoning**: Llama-3.1-405B-Instruct (via NVIDIA NIM)
-- **Framework**: FastAPI (Python 3.12)
-- **Intelligence**: CrewAI, ChromaDB, Sentence-Transformers
-- **Frontend**: Vanilla JS, CSS3 (Glassmorphism), Leaflet.js, Plotly.js
-- **Runtime**: Node.js (Orchestrator)
+- **Reasoning Model**: Meta Llama 3.1 405B (via NVIDIA NIM)
+- **Orchestration**: CrewAI (Multi-agent extraction & translation)
+- **Vector Engine**: ChromaDB (Persistent semantic storage)
+- **Backend**: FastAPI (High-performance Python 3.12)
+- **Frontend**: Vanilla JS / CSS3 (Elite Glassmorphic Tactical UI)
+- **Visuals**: Leaflet.js (Geospatial) & Plotly.js (Intelligence Gauges)
+
+---
+
+## 🚀 Installation & Setup
+
+### 1. Prerequisites
+- Python 3.12+
+- Node.js (for the orchestrated launcher)
+- NVIDIA NIM API Key
+
+### 2. Deployment
+```bash
+# Clone the repository
+git clone https://github.com/sxrabx/ai-ngo-dashboard.git
+cd ai-ngo-dashboard
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+echo "NVIDIA_API_KEY=your_key_here" > .env
+```
+
+### 3. Launch the Command Center
+```bash
+node launch.js
+```
+*   **Dashboard**: `http://localhost:3000`
+*   **API Gateway**: `http://localhost:8000`
 
 ---
 
@@ -97,7 +116,4 @@ node launch.js
 This project is licensed under the ISC License (as declared in package.json). The frontend package is marked private with no explicit license file — treat all code as proprietary unless otherwise stated by the repository owner.
 
 ---
-
-<p align="center">
-  Developed for <strong>Mission-Critical Community Response</strong>.
-</p>
+**Developed for Mission-Critical Community Response.**
