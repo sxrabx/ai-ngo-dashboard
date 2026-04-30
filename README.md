@@ -313,4 +313,3 @@ _Note: The frontend components in the `/frontend` directory are treated as propr
 Built with ❤️ for faster disaster response and smarter community coordination.
 
 </div>
-"Description:
